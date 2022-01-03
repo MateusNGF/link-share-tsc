@@ -1,0 +1,2 @@
+[alias]
+  c = !git add -A && git commit -m 
