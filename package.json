@@ -1,7 +1,7 @@
 {
    "name": "link-share-tsc",
    "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
+   "description": "Share your link with all peoples.",
    "devDependencies": {
       "@types/express": "^4.17.13",
       "@types/node": "^8.0.29",
