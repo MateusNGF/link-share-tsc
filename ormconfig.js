@@ -1,14 +1,10 @@
 
 const DEV = (process.argv[2] !== 'dev' || process.argv[2] === undefined) ? false : true
 
-module.exports = {
+var ormconfig = {
    "name": "default",
    "type": "postgres",
    "url": process.env.DATABASE_URL,
-   "ssl": true,
-   "extra": {
-      "ssl": { "rejectUnauthorized": false }
-   },
    "synchronize": true,
    "logging": false,
    "entities": [
@@ -26,5 +22,14 @@ module.exports = {
       "subscribersDir": "src/subscriber"
    }
 }
+
+if (!DEV) {
+   ormconfig.ssl = true
+   ormconfig.extra = { "ssl": { "rejectUnauthorized": false } }
+   console.warn("===> ⚠️  started in production.  ⚠️ <===")
+} else {
+   console.warn("===> ⚠️  Booting as a developer.  ⚠️ <===")
+}
+module.exports = ormconfig
 
 
