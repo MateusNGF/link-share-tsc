@@ -5,9 +5,8 @@ import { createConnection } from 'typeorm'
 
 createConnection().then(sucess => {
   dotenv.config()
-  app.listen(process.env.port, () => { console.log("===>  ✅  Running server.  ✅  <===") })
+  app.listen(process.env.port || 3000, () => { console.log("===>  ✅  Running server.  ✅  <===") })
 }).catch(error => {
-  console.log(error)
   console.log("Error in connected database");
 })
 
