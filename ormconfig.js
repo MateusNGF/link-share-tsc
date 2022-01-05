@@ -5,6 +5,10 @@ module.exports = {
    "name": "default",
    "type": "postgres",
    "url": process.env.DATABASE_URL,
+   "ssl": true,
+   "extra": {
+      "ssl": { "rejectUnauthorized": false }
+   },
    "synchronize": true,
    "logging": false,
    "entities": [
