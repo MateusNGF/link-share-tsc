@@ -3,12 +3,16 @@ import app from './app'
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
 
-createConnection().then(sucess => {
+try {
+  createConnection()
+  const port = process.env.PORT || 3000
   dotenv.config()
-  app.listen(process.env.PORT || 3000, () => { console.log("===>  ✅  Running server.  ✅  <===") })
-}).catch(error => {
+  app.listen(port, () => {
+    console.log("===>  ✅  Running server (" + port + ")  ✅  <===")
+  })
+} catch (e) {
   console.log("Error in connected database");
-})
+}
 
 
 
