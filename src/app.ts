@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { linkRouter, userRouter } from './routes'
+import { adapterRouter, linkRouter, userRouter } from './routes'
 
 const app = express()
 
@@ -15,5 +15,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/user', userRouter)
 app.use('/link', linkRouter)
+app.use('/adapter', adapterRouter)
 
 export default app;
