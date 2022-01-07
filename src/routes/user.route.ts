@@ -5,5 +5,5 @@ import { verify } from "../utils"
 export const userRouter = Router()
 
 userRouter.post('/register', create)
-userRouter.get('/access', access)
+userRouter.post('/access', access)
 userRouter.get('/refresh', verify, refresh)
