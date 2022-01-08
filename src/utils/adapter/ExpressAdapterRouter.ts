@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import { IController } from "../../controllers";
 
 
-export type typeCustomRequest = { body: {}, params: {}, query: {} }
-export type typeCustomResponse = { statusCode: number, body: {} }
+export type typeCustomRequest = { body: any, params: any, query: any, header: any }
+export type typeCustomResponse = { statusCode: number, body: any }
 
 export class ExpressAdapterRouter {
   static adapt(controller: IController): any {
     return async (req: Request, res: Response) => {
       const customRequest: typeCustomRequest = {
-        body: req.body, params: req.params, query: req.query
+        body: req.body, params: req.params, query: req.query, header: req.header
       }
       const httpResponse: typeCustomResponse = await controller.exec(customRequest)
       res.status(httpResponse.statusCode).json(httpResponse.body)

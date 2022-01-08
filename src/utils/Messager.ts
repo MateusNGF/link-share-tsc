@@ -1,22 +1,6 @@
-import { typeCustomResponse } from "./ExpressAdapterRouter";
-import { IController } from "../../controllers/protocols";
-import { typeCustomRequest } from ".";
-import { Unauthorized } from "..";
+import { typeCustomResponse } from "./adapter";
 
-
-export class AdapterTester implements IController {
-
-  exec(request: typeCustomRequest): typeCustomResponse {
-    try {
-      const key = true
-      if (key) throw new Unauthorized("Acesso negado.")
-      return Messager.sucess({ message: "Sucesso" })
-    } catch (e) {
-      return Messager.error(e)
-    }
-  }
-}
-class Messager {
+export class Messager {
   static sucess(body: object): typeCustomResponse {
     return {
       statusCode: 200,
