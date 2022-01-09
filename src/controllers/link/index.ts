@@ -1,2 +1,2 @@
-export * from "./delete.controller"
-export * from "./insert.controller"
+export * from "./Delete.controller"
+export * from "./Insert.controller"

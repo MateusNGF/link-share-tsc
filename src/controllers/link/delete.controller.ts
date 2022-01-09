@@ -4,7 +4,7 @@ import { IController } from ".."
 import { Link, User } from "../../entity"
 import { UserReposiroty } from "../../repository"
 import { LinkRepository } from "../../repository/Link.repository"
-import { DataNotFound, Messager, Unauthorized } from "../../utils"
+import { Messager, Unauthorized } from "../../utils"
 import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter"
 
 export class DeleteLinkById implements IController {
