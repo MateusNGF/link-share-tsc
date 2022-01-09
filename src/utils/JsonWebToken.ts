@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken'
 
-import { Unauthorized } from "./errors/custom";
-import { Sender } from "./Sender";
-import { MissingParameters } from "./errors";
 import { User } from "../entity";
+import { MissingParameters } from "./errors";
+import { Unauthorized } from "./errors/custom";
 
 export const verify = (req: Request, res: Response, next: NextFunction): any => {
   try {
@@ -14,7 +13,12 @@ export const verify = (req: Request, res: Response, next: NextFunction): any => 
     req.header['user'] = decoded(token.toString())
     next()
   } catch (error) {
-    Sender.error(res, error)
+    res.status(401).json({
+      status: false,
+      body: {
+        message: error.message
+      }
+    })
   }
 }
 

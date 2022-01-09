@@ -1,32 +1,35 @@
-import { Request, Response } from "express"
-import { getRepository } from "typeorm"
-import { Link, User } from "../../entity"
-import { InvalidCredencial, ParamExists, Sender } from "../../utils"
+import { getCustomRepository } from "typeorm"
+import { IController } from ".."
+import { User } from "../../entity"
+import { UserReposiroty } from "../../repository"
+import { LinkRepository } from "../../repository/Link.repository"
+import { InvalidCredencial, Messager, ParamExists } from "../../utils"
+import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter"
 
 
 
-export const insert = async (req: Request, res: Response) => {
-  try {
+export class CreateNewLink implements IController {
+  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+    try {
 
-    const idUser = req.header['user']['id']
-    const repositoryLink = getRepository(Link)
-    const repositoryUser = getRepository(User)
+      const idCurrentUser = request.header['user']['id'],
+        repositoryLink = getCustomRepository(LinkRepository),
+        repositoryUser = getCustomRepository(UserReposiroty),
+        currentUser: User = await repositoryUser.findById(idCurrentUser)
 
-    const currentUser: User = await repositoryUser.findOne({ where: { id: idUser } })
+      if (!currentUser) throw new InvalidCredencial("User not found.")
+      if (currentUser.links.find((link) => link.url.toString() === request.body.url.toString()))
+        throw new ParamExists("new link has exist in your collection")
 
-    if (!currentUser)
-      throw new InvalidCredencial("User not found.")
-    if (currentUser.links.find((link) => link.url === req.body.url))
-      throw new ParamExists("new link has exist in your collection")
+      const newLink = repositoryLink.save({
+        type: request.body.type,
+        url: request.body.url,
+        owner: currentUser,
+      })
 
-    const newLink = repositoryLink.save({
-      type: req.body.type,
-      url: req.body.url,
-      owner: currentUser,
-    })
-
-    Sender.sucess(res, newLink)
-  } catch (e) {
-    Sender.error(res, e)
+      return Messager.sucess({})
+    } catch (error) {
+      return Messager.error(error)
+    }
   }
 }

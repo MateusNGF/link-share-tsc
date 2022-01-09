@@ -1,4 +1,4 @@
-import { IErrorCustom } from "../../protocols";
+import { IErrorCustom } from ".."
 
 export class ErrorCustom extends Error implements IErrorCustom {
   public custom: boolean = true

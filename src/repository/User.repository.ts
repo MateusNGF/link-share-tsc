@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
-import { InvalidCredencial, NotFound, ParamExists, Unauthorized } from "../utils";
+import { InvalidCredencial, DataNotFound, ParamExists, Unauthorized } from "../utils";
 import { User } from "../entity";
 
 @EntityRepository(User)
@@ -14,8 +14,8 @@ export class UserReposiroty extends Repository<User> {
   }
 
   public async findById(id: string) {
-    const currentUserFound = await this.findOne({ id })
-    if (!currentUserFound) throw new NotFound('User Not found !')
+    const currentUserFound: User = await this.findOne({ id })
+    if (!currentUserFound) throw new DataNotFound('User Not found !')
     return currentUserFound
   }
 

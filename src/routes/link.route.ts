@@ -1,9 +1,10 @@
 import { Router } from "express"
-import { deletar, insert } from "../controllers/link"
+import { DeleteLinkById, CreateNewLink } from "../controllers/link"
+import { ExpressAdapterRouter } from "../utils/adapter"
 import { verify } from "../utils/JsonWebToken"
 
 
 export const linkRouter = Router()
 
-linkRouter.post('/create', verify, insert)
-linkRouter.delete('/:idLink/*', verify, deletar)
+linkRouter.post('/create', verify, ExpressAdapterRouter.adapt(new CreateNewLink()))
+linkRouter.delete('/:idLink/*', verify, ExpressAdapterRouter.adapt(new DeleteLinkById()))

@@ -1,26 +1,33 @@
 import { Request, Response } from "express"
-import { getRepository } from "typeorm"
+import { getCustomRepository, getRepository } from "typeorm"
+import { IController } from ".."
 import { Link, User } from "../../entity"
-import { NotFound, Sender, Unauthorized } from "../../utils"
+import { UserReposiroty } from "../../repository"
+import { LinkRepository } from "../../repository/Link.repository"
+import { DataNotFound, Messager, Unauthorized } from "../../utils"
+import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter"
 
-export const deletar = async (req: Request, res: Response) => {
-  try {
-    const idUser = req.header['user']['id']
-    const idLink = req.params['idLink']
+export class DeleteLinkById implements IController {
+  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+    try {
+      const idCurrentUser = request.header['user']['id'],
+        idLinkForDelete = request.params['idLink'],
+        repositoryUser = getCustomRepository(UserReposiroty),
+        repositoryLink = getCustomRepository(LinkRepository)
 
-    const repositoryUser = getRepository(User)
 
-    const currentUser: User = await repositoryUser.findOne({ where: { id: idUser } })
+      const currentUser: User = await repositoryUser.findById(idCurrentUser),
+        currentLinkUser = currentUser.links.find(
+          (link: Link) => link.id_link.toString() === idLinkForDelete.toString()
+        )
 
-    if (!currentUser)
-      throw new NotFound("Error in search account.")
+      if (!currentLinkUser) throw new Unauthorized("Not Found, Action Denied ... ")
 
-    if (!currentUser.links.find((link: Link) => (link.id_link == idLink)))
-      throw new Unauthorized("Action Denied.")
+      await repositoryLink.remove(currentLinkUser)
 
-    const deleteCurrentLink = getRepository(Link).delete({ id_link: idLink })
-    Sender.sucess(res, deleteCurrentLink)
-  } catch (error) {
-    Sender.error(res, error)
+      return Messager.sucess({})
+    } catch (error) {
+      return Messager.error(error)
+    }
   }
 }
