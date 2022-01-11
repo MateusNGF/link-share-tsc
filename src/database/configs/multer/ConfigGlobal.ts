@@ -7,8 +7,8 @@ import { FileError } from "../../../utils/errors/custom/FileError";
 export abstract class ConfigStorage {
   pathResolve: string = undefined
   nameColletion: string = undefined
-  fileLimitSize: number = undefined
   extPermiteds: String[] = undefined;
+  fileLimitSize: number = 20 * 1024 * 1024
   storageReferencia: string = process.env.STORAGE_TYPE
   pathDatabase: string = `${__dirname}/../../documents/`
 

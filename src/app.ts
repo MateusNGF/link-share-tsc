@@ -15,7 +15,11 @@ app.use(function (req, res, next) {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use("/d/documents/*", verify,express.static(path.resolve(__dirname, "database", "documents")))
+app.use("/files/:colletion/:filename", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "database", "documents", req.params.colletion, req.params.filename), (e) => {
+    if (e) res.status(404).json({ status: false, message: "Colletion or name document not found." })
+  })
+})
 
 app.use('/user', userRouter)
 app.use('/link', linkRouter)

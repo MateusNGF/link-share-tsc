@@ -2,7 +2,7 @@ import { ConfigStorage } from "."
 
 export class StoragePicBanner extends ConfigStorage {
 
-  nameColletion: string = "pic_banners"
+  nameColletion: string = process.env.ColletionPicBanners
 
   config() {
     return this.build()
