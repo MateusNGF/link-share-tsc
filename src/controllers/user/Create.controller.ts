@@ -19,11 +19,14 @@ export class Create implements IController {
       userCurrent.email = request.body.email
       userCurrent.nickname = request.body.nickname
       userCurrent.password = request.body.password
+      userCurrent.description = request.body.description
+      userCurrent.pic_profile = `${process.env.colletionPicProfiles}/${request.file.filename}`
 
-
-      if (request.body.links && request.body.links.length > 0) {
+      let newLinksCurrentUser = JSON.parse(request.body.links)
+      if (newLinksCurrentUser && newLinksCurrentUser.length > 0) {
+        console.log(newLinksCurrentUser)
         userCurrent.links = []
-        request.body.links.forEach((link: Link) => {
+        newLinksCurrentUser.forEach((link: Link) => {
           const linkCurrent = new Link()
 
           linkCurrent.type = link.type

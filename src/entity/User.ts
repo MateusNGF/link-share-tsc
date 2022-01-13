@@ -10,14 +10,20 @@ export class User {
   @Column({ nullable: false })
   name: string
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: false })
   email: string
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: false })
   nickname: string
 
-  @Column()
+  @Column({ nullable: false })
   password: string
+
+  @Column({ nullable : true, default : null })
+  pic_profile?: string
+
+  @Column({ nullable: true, default : null, length: 500 })
+  description?: string
 
   @OneToMany(() => Link, links => links.owner, { eager: true, cascade: true })
   links: Link[]

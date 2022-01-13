@@ -42,8 +42,6 @@ export abstract class ConfigStorage {
       }
     })
   }
-
-
   static filterExt(permitedExt: String[], mimetype: string): boolean {
     if (permitedExt.includes(mimetype)) {
       return true
