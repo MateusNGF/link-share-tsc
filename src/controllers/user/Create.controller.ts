@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { Link, User } from "../../entity";
 import { UserReposiroty } from "../../repository";
-import { buildBody, Messager } from "../../utils";
+import { buildBody, File, Messager } from "../../utils";
 import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter";
 
 
@@ -37,6 +37,9 @@ export class Create implements IController {
       const savedCurrentUser: User = await repository.save(userCurrent)
       return Messager.sucess(buildBody(savedCurrentUser))
     } catch (error) {
+      if (!File.remove(request.file.path)) {
+        return Messager.error({ message: "Error in delete image" })
+      }
       return Messager.error(error)
     }
   }
