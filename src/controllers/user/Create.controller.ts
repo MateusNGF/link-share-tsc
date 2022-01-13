@@ -24,7 +24,6 @@ export class Create implements IController {
 
       let newLinksCurrentUser = JSON.parse(request.body.links)
       if (newLinksCurrentUser && newLinksCurrentUser.length > 0) {
-        console.log(newLinksCurrentUser)
         userCurrent.links = []
         newLinksCurrentUser.forEach((link: Link) => {
           const linkCurrent = new Link()
