@@ -1,0 +1,20 @@
+_id: env_80c2603af4467e4a45e8793207d3ac68b078cc37
+type: Environment
+parentId: wrk_bd26f2bfd006444c9d0f65d61de794ab
+modified: 1642199554167
+created: 1642127180264
+name: Base Environment
+data:
+  local: http://localhost
+  remote: https://shareliink.herokuapp.com
+  port: "8080"
+  token: ""
+dataPropertyOrder:
+  "&":
+    - local
+    - remote
+    - port
+    - token
+color: null
+isPrivate: false
+metaSortKey: 1642127180264

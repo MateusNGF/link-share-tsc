@@ -1,0 +1,42 @@
+_id: req_c2241feefd5e4128934e22c8e40163f7
+type: Request
+parentId: fld_cddd40155645450d979e469eb0dc6e12
+modified: 1642202181627
+created: 1642199511291
+url: "{{ _.local }}:{{ _.port }}/user/register"
+name: /user/register
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name" : "Administrador",
+    	"email" : "adm@admserver",
+    	"nickname" : "Adminzinho",
+    	"password" : "adm123",
+    	"description" : "EU sou legal",
+    	"links" : [
+    		{
+    			"type" : "Instagram",
+    			"url" : "https://instagram/adm"
+    		},{
+    			"type" : "Pornhub",
+    			"url" : "https://pornhub.com/anal20cm/movies"
+    		}
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_8edeaeeca98d4cef8f3647a91102c5e2
+authentication: {}
+metaSortKey: -1642127237959
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

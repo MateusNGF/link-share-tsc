@@ -1,0 +1,30 @@
+_id: req_3bd1f82991d94af18c6fd452760a5d04
+type: Request
+parentId: fld_cddd40155645450d979e469eb0dc6e12
+modified: 1642202180951
+created: 1642199511296
+url: "{{ _.local }}:{{ _.port }}/user/access"
+name: /user/access
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email" : "adm@admserver",
+    	"password" : "adm123"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_90373c4b07f14211a983b29104ae62f2
+authentication: {}
+metaSortKey: -1642127238009
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
