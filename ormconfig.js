@@ -1,5 +1,5 @@
 
-const DEV = (process.argv[2] !== 'dev' || process.argv[2] === undefined || process.env.RUNTIME !== "local") ? false : true
+const DEV = (process.argv[2] !== 'dev' || process.argv[2] === undefined) ? false : true
 
 var ormconfig = {
    "name": "default",

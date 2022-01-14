@@ -20,12 +20,10 @@ export class Create implements IController {
       userCurrent.nickname = request.body.nickname
       userCurrent.password = request.body.password
       userCurrent.description = request.body.description
-      userCurrent.pic_profile = `${process.env.colletionPicProfiles}/${request.file.filename}`
 
-      let newLinksCurrentUser = JSON.parse(request.body.links)
-      if (newLinksCurrentUser && newLinksCurrentUser.length > 0) {
+      if (request.body.links && request.body.links.length > 0) {
         userCurrent.links = []
-        newLinksCurrentUser.forEach((link: Link) => {
+        request.body.links.forEach((link: Link) => {
           const linkCurrent = new Link()
 
           linkCurrent.type = link.type
@@ -37,9 +35,6 @@ export class Create implements IController {
       const savedCurrentUser: User = await repository.save(userCurrent)
       return Messager.sucess(buildBody(savedCurrentUser))
     } catch (error) {
-      if (!File.remove(request.file.path)) {
-        return Messager.error({ message: "Error in delete image" })
-      }
       return Messager.error(error)
     }
   }
