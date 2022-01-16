@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from 'typeorm'
 import { Link } from '../entity'
+import { schemas } from '../utils'
 
 @Entity('user')
 export class User {
@@ -39,5 +40,14 @@ export class User {
     return false
   }
 
+
+  async valid() {
+    return await schemas.user.validateAsync({
+      name: this.name,
+      nickname: this.nickname,
+      password: this.password,
+      email: this.email
+    })
+  }
 
 }

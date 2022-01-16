@@ -2,6 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { Link, User } from "../../entity";
 import { UserReposiroty } from "../../repository";
+import { userRouter } from "../../routes";
 import { buildBody, File, Messager } from "../../utils";
 import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter";
 
@@ -20,6 +21,8 @@ export class Create implements IController {
       userCurrent.nickname = request.body.nickname
       userCurrent.password = request.body.password
       userCurrent.description = request.body.description
+
+      await userCurrent.valid()
 
       if (request.body.links && request.body.links.length > 0) {
         userCurrent.links = []

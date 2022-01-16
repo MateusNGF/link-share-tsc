@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { messages, settings } from ".";
+import { messages, settings } from "./index";
 
 export const schemas = {
   user: Joi.object({
