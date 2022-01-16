@@ -2,8 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { User } from "../../entity";
 import { UserReposiroty } from "../../repository";
-import { buildBody, Messager } from "../../utils";
-import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter";
+import { buildBody, Messager, schemas, typeCustomRequest, typeCustomResponse } from "../../utils";
 
 
 
@@ -14,7 +13,7 @@ export class Access implements IController {
       const repository = getCustomRepository(UserReposiroty)
       var access: User = new User()
 
-      await access.validAccess(request.body.email, request.body.password)
+      await schemas.user.methods.validProps(["email", "password"], request.body)
       access = await repository.validAccess(request.body.email, request.body.password)
 
       return Messager.sucess(buildBody(access))

@@ -1,11 +1,10 @@
-import { Request, Response } from "express"
-import { getCustomRepository, getRepository } from "typeorm"
+import { getCustomRepository } from "typeorm"
+
 import { IController } from ".."
 import { Link, User } from "../../entity"
-import { UserReposiroty } from "../../repository"
-import { LinkRepository } from "../../repository/Link.repository"
-import { Messager, Unauthorized } from "../../utils"
-import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter"
+import message from '../../utils/configs/texts.config'
+import { LinkRepository, UserReposiroty } from "../../repository"
+import { Messager, typeCustomRequest, typeCustomResponse, Unauthorized } from "../../utils"
 
 export class DeleteLinkById implements IController {
   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
@@ -16,12 +15,9 @@ export class DeleteLinkById implements IController {
         repositoryLink = getCustomRepository(LinkRepository)
 
 
-      const currentUser: User = await repositoryUser.findById(idCurrentUser),
-        currentLinkUser = currentUser.links.find(
-          (link: Link) => link.id_link.toString() === idLinkForDelete.toString()
-        )
-
-      if (!currentLinkUser) throw new Unauthorized("Not Found, Action Denied ... ")
+      const currentUser: User = await repositoryUser.findById(idCurrentUser)
+      const currentLinkUser = currentUser.links.find((link: Link) => link.id_link.toString() === idLinkForDelete.toString())
+      if (!currentLinkUser) throw new Unauthorized(message.ptbr.entities.link.errors.notFound)
 
       await repositoryLink.remove(currentLinkUser)
 

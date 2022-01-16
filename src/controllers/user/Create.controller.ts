@@ -2,9 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { Link, User } from "../../entity";
 import { UserReposiroty } from "../../repository";
-import { userRouter } from "../../routes";
-import { buildBody, File, Messager } from "../../utils";
-import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter";
+import { buildBody, InvalidParam, Messager, typeCustomRequest, typeCustomResponse } from "../../utils";
 
 
 export class Create implements IController {
@@ -15,20 +13,21 @@ export class Create implements IController {
 
       const userCurrent = new User(request.body)
 
-      await userCurrent.validRegister()
-      await repository.validCredencials(userCurrent.nickname, userCurrent.email)
+      await userCurrent.valid()
 
       if (request.body.links && request.body.links.length > 0) {
-        userCurrent.links = []
-        request.body.links.forEach((link: Link) => {
-          const linkCurrent = new Link()
+        var promises = []; userCurrent.links = []
 
-          linkCurrent.type = link.type
-          linkCurrent.url = link.url
+        request.body.links.forEach(async (link: Link) => {
+          const linkCurrent = new Link(link)
 
+          promises.push(linkCurrent.valid())
           userCurrent.links.push(linkCurrent)
         })
+        await Promise.all(promises).catch((e) => { throw new InvalidParam(`${e.message} - (${e._original})`) });
       }
+
+      await repository.validCredencials(userCurrent.nickname, userCurrent.email)
       const savedCurrentUser: User = await repository.save(userCurrent)
       return Messager.sucess(buildBody(savedCurrentUser))
     } catch (error) {

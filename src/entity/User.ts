@@ -45,19 +45,7 @@ export class User {
     return false
   }
 
-
-  async validRegister() {
-    return await Joi.object(schemas.user).validateAsync({
-      name: this.name,
-      nickname: this.nickname,
-      password: this.password,
-      email: this.email
-    })
+  valid() {
+    return schemas.user.methods.validProps(["name", "nickname", "password", "email"], this)
   }
-  async validAccess(email: string, password: string) {
-    return await Joi
-      .object({ email: schemas.user.email, password: schemas.user.password })
-      .validateAsync({ emai: this.email || email, password: this.password || password })
-  }
-
 }
