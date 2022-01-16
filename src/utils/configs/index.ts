@@ -1,1 +1,3 @@
-export * from './schemas_configs'
+export * from './schemas.config'
+export * from './settings.config'
+export * from './texts.config'
