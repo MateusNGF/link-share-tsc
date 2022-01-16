@@ -5,21 +5,21 @@ import { User } from "../entity";
 @EntityRepository(User)
 export class UserReposiroty extends Repository<User> {
 
-  public async findByEmail(email: string) : Promise<User> {
+  public async findByEmail(email: string): Promise<User> {
     return await this.findOne({ where: { email } })
   }
 
-  public async findByNick(nickname: string) {
+  public async findByNick(nickname: string): Promise<User> {
     return await this.findOne({ where: { nickname } })
   }
 
-  public async findById(id: string) {
+  public async findById(id: string): Promise<User> {
     const currentUserFound: User = await this.findOne({ id })
     if (!currentUserFound) throw new DataNotFound('User Not found !')
     return currentUserFound
   }
 
-  public async validAccess(email: string, password: string) {
+  public async validAccess(email: string, password: string): Promise<User> {
     const returnDB = await this.findByEmail(email)
     if (!returnDB) throw new InvalidCredencial("Email not registred.")
     if (returnDB.password !== password) throw new Unauthorized("Password invalid.")

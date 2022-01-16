@@ -19,10 +19,10 @@ export class User {
   @Column({ nullable: false })
   password: string
 
-  @Column({ nullable : true, default : null })
+  @Column({ nullable: true, default: null })
   pic_profile?: string
 
-  @Column({ nullable: true, default : null, length: 500 })
+  @Column({ nullable: true, default: null, length: 500 })
   description?: string
 
   @OneToMany(() => Link, links => links.owner, { eager: true, cascade: true })
@@ -34,7 +34,7 @@ export class User {
   @UpdateDateColumn({ name: 'update_At' })
   updateAt?: Date
 
-  isOwner(link: Link): boolean { 
+  isOwner(link: Link): boolean {
     if (this.id.toString() === link.owner.toString()) return true
     return false
   }
