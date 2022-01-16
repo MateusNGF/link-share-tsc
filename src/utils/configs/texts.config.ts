@@ -24,9 +24,9 @@ export default {
             invalidFormat: `Nickname precisar ser do formato ${settings.user.text.nickname.prefix}seu_nickname.`
           },
           description: {
-            type: "A descrição precisa ser em formato de string.",
-            min: `Nickname deve ser maior que ${settings.user.text.description.min} caracteres.`,
-            max: `Nickname deve ser menor que ${settings.user.text.description.max} caracteres.`,
+            type: "A Descrição precisa ser em formato de string.",
+            min: `Descrição deve ser maior que ${settings.user.text.description.min} caracteres.`,
+            max: `Descrição deve ser menor que ${settings.user.text.description.max} caracteres.`,
             required: `Descrição é necessário.`,
           },
           password: {
