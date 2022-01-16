@@ -4,7 +4,7 @@ import settings from './settings.config'
 import messages from './texts.config'
 
 export const schemas = {
-  user: Joi.object({
+  user: {
     name: Joi.string().lowercase().trim()
       .min(settings.user.text.name.min).max(settings.user.text.name.max).required()
       .messages({
@@ -38,8 +38,8 @@ export const schemas = {
         'string.min': messages.ptbr.entities.user.validation.password.min,
         'string.max': messages.ptbr.entities.user.validation.password.max,
       })
-  }),
-  link: Joi.object({
+  },
+  link: {
     type: Joi.string().required()
       .messages({
         'string.base': messages.ptbr.entities.link.validation.type.type,
@@ -51,5 +51,5 @@ export const schemas = {
         'any.required': messages.ptbr.entities.link.validation.url.required,
         'string.pattern.base': messages.ptbr.entities.link.validation.url.invalidFormat
       })
-  })
+  }
 }

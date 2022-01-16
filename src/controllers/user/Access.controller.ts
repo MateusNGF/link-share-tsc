@@ -12,7 +12,10 @@ export class Access implements IController {
   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
     try {
       const repository = getCustomRepository(UserReposiroty)
-      const access: User = await repository.validAccess(request.body.email, request.body.password)
+      var access: User = new User()
+
+      await access.validAccess(request.body.email, request.body.password)
+      access = await repository.validAccess(request.body.email, request.body.password)
 
       return Messager.sucess(buildBody(access))
     } catch (error) {

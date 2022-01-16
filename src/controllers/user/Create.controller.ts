@@ -12,17 +12,11 @@ export class Create implements IController {
   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
     try {
       const repository = getCustomRepository(UserReposiroty)
-      await repository.validCredencials(request.body.nickname, request.body.email)
 
-      const userCurrent = new User()
+      const userCurrent = new User(request.body)
 
-      userCurrent.name = request.body.name
-      userCurrent.email = request.body.email
-      userCurrent.nickname = request.body.nickname
-      userCurrent.password = request.body.password
-      userCurrent.description = request.body.description
-
-      await userCurrent.valid()
+      await userCurrent.validRegister()
+      await repository.validCredencials(userCurrent.nickname, userCurrent.email)
 
       if (request.body.links && request.body.links.length > 0) {
         userCurrent.links = []
