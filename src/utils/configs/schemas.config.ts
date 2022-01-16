@@ -1,5 +1,7 @@
 import Joi from "joi";
-import { messages, settings } from "./index";
+
+import settings from './settings.config'
+import messages from './texts.config'
 
 export const schemas = {
   user: Joi.object({

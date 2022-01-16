@@ -1,4 +1,4 @@
-export const settings = {
+export default {
   user: {
     text: {
       name: { min: 20, max: 50 },

@@ -1,6 +1,6 @@
-import { settings } from ".";
+import settings from "./settings.config";
 
-export const messages = {
+export default {
   ptbr: {
     entities: {
       user: {
