@@ -23,6 +23,12 @@ export default {
             required: `Nickname é necessário.`,
             invalidFormat: `Nickname precisar ser do formato ${settings.user.text.nickname.prefix}seu_nickname.`
           },
+          description: {
+            type: "A Descrição precisa ser em formato de string.",
+            min: `Descrição deve ser maior que ${settings.user.text.description.min} caracteres.`,
+            max: `Descrição deve ser menor que ${settings.user.text.description.max} caracteres.`,
+            required: `Descrição é necessário.`,
+          },
           password: {
             type: "A Senha precisa ser uma string.",
             min: `A Senha deve ser maior que ${settings.user.text.password.min} caracteres.`,
@@ -30,6 +36,11 @@ export default {
             required: `A Senha é necessário.`,
             invalidFormat: "A Senha é muito fraca :^( ... Tente adiconar caracteres especiais e numeros."
           }
+        },
+        errors: {
+          notFound: "Usuário não foi encontrado",
+          incorret: (prop) => { return `${prop} incorreto(a).` },
+          duplicated: (prop) => { return `Este(a) ${prop} já esta registrado(a). Tente outro.` }
         }
       },
       link: {
@@ -42,8 +53,12 @@ export default {
           url: {
             type: "A url deve ser uma string.",
             required: "A url é necessário.",
-            invalidFormat: "Endereço mal formatado ou não há suporte (ftp, ssl, ...)"
+            invalidFormat: "Url mal formatada ou não suportada, exemplo : https://www.any.com*"
           }
+        },
+        errors: {
+          duplicated: "Você já possui esse link.",
+          notFound: "Link não foi encontrado."
         }
       }
     }

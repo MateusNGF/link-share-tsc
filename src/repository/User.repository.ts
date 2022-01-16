@@ -1,6 +1,8 @@
 import { EntityRepository, Repository } from "typeorm";
-import { InvalidCredencial, DataNotFound, ParamExists, Unauthorized } from "../utils";
+
 import { User } from "../entity";
+import message from '../utils/configs/texts.config'
+import { InvalidCredencial, DataNotFound, ParamExists, Unauthorized } from "../utils";
 
 @EntityRepository(User)
 export class UserReposiroty extends Repository<User> {
@@ -15,21 +17,21 @@ export class UserReposiroty extends Repository<User> {
 
   public async findById(id: string): Promise<User> {
     const currentUserFound: User = await this.findOne({ id })
-    if (!currentUserFound) throw new DataNotFound('User Not found !')
+    if (!currentUserFound) throw new DataNotFound(message.ptbr.entities.user.errors.notFound)
     return currentUserFound
   }
 
   public async validAccess(email: string, password: string): Promise<User> {
     const returnDB = await this.findByEmail(email)
-    if (!returnDB) throw new InvalidCredencial("Email not registred.")
-    if (returnDB.password !== password) throw new Unauthorized("Password invalid.")
+    if (!returnDB) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound)
+    if (returnDB.password !== password) throw new Unauthorized(message.ptbr.entities.user.errors.incorret('Senha'))
     return returnDB
   }
 
   public async validCredencials(nickname: string, email: string) {
     if (await this.findByEmail(email))
-      throw new ParamExists(`email ${email} has exist, try to swap.`)
+      throw new ParamExists(message.ptbr.entities.user.errors.duplicated('E-mail'))
     if (await this.findByNick(nickname))
-      throw new ParamExists(`nickname ${nickname} has exist, try to swap.`)
+      throw new ParamExists(message.ptbr.entities.user.errors.duplicated('Nickname'))
   }
 }

@@ -2,8 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { User } from "../../entity";
 import { UserReposiroty } from "../../repository";
-import { buildBody, Messager } from "../../utils";
-import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter";
+import { buildBody, Messager, typeCustomRequest, typeCustomResponse } from "../../utils";
 
 export class Refresh implements IController {
   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
@@ -11,7 +10,7 @@ export class Refresh implements IController {
       const idCurrentUser = request.header['user']['id']
       const repository = getCustomRepository(UserReposiroty)
 
-      const currentUserUpdated : User = await repository.findById(idCurrentUser)
+      const currentUserUpdated: User = await repository.findById(idCurrentUser)
 
       return Messager.sucess(buildBody(currentUserUpdated))
     } catch (error) {

@@ -1,10 +1,10 @@
 import { getCustomRepository } from "typeorm"
+
 import { IController } from ".."
-import { User } from "../../entity"
-import { UserReposiroty } from "../../repository"
-import { LinkRepository } from "../../repository/Link.repository"
-import { InvalidCredencial, Messager, ParamExists } from "../../utils"
-import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter"
+import { Link, User } from "../../entity"
+import message from '../../utils/configs/texts.config'
+import { LinkRepository, UserReposiroty } from "../../repository"
+import { InvalidCredencial, Messager, ParamExists, typeCustomRequest, typeCustomResponse } from "../../utils"
 
 
 
@@ -15,17 +15,15 @@ export class CreateNewLink implements IController {
       const idCurrentUser = request.header['user']['id'],
         repositoryLink = getCustomRepository(LinkRepository),
         repositoryUser = getCustomRepository(UserReposiroty),
-        currentUser: User = await repositoryUser.findById(idCurrentUser)
+        currentUser: User = await repositoryUser.findById(idCurrentUser),
+        newLink: Link = new Link(request.body)
 
-      if (!currentUser) throw new InvalidCredencial("User not found.")
-      if (currentUser.links.find((link) => link.url.toString() === request.body.url.toString()))
-        throw new ParamExists("new link has exist in your collection")
+      await newLink.valid()
+      if (!currentUser) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound)
+      if (currentUser.links.find((link) => link.url.toString() === newLink.url.toString()))
+        throw new ParamExists(message.ptbr.entities.link.errors.duplicated)
 
-      const newLink = repositoryLink.save({
-        type: request.body.type,
-        url: request.body.url,
-        owner: currentUser,
-      })
+      await repositoryLink.save(newLink)
 
       return Messager.sucess({})
     } catch (error) {
