@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from 'typeorm'
 import { Link } from '../entity'
 
 @Entity('user')
@@ -26,11 +26,18 @@ export class User {
   description?: string
 
   @OneToMany(() => Link, links => links.owner, { eager: true, cascade: true })
-  links: Link[]
+  links?: Link[]
 
   @CreateDateColumn({ name: 'created_At' })
   createdAt?: Date
 
   @UpdateDateColumn({ name: 'update_At' })
   updateAt?: Date
+
+  isOwner(link: Link): boolean { 
+    if (this.id.toString() === link.owner.toString()) return true
+    return false
+  }
+
+
 }
