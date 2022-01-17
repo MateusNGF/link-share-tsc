@@ -40,7 +40,7 @@ export default {
         errors: {
           notFound: "Usuário não foi encontrado",
           incorret: (prop) => { return `${prop} incorreto(a).` },
-          duplicated: (prop) => { return `Este(a) ${prop} já esta registrado(a). Tente outro.` }
+          duplicated: (prop) => { return `Este(a) ${prop} já esta registrado(a). Tente outro(a).` }
         }
       },
       link: {
