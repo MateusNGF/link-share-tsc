@@ -1,8 +1,12 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { User } from '../entity'
+import { schemas } from '../utils'
 
 @Entity('link')
 export class Link {
+  constructor(link: Link) {
+    Object.assign(this, link)
+  }
   @PrimaryGeneratedColumn()
   id_link?: string
 
@@ -20,4 +24,8 @@ export class Link {
 
   @UpdateDateColumn({ name: 'update_At' })
   updateAt?: Date
+
+  valid() {
+    return schemas.link.methods.validProps(["type", "url"], this)
+  }
 }

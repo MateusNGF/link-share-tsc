@@ -2,8 +2,8 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { Link, User } from "../../entity";
 import { UserReposiroty } from "../../repository";
-import { buildBody, File, Messager } from "../../utils";
-import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter";
+import { buildBody, InvalidParam, Messager, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { hashPassword } from "../../utils/auth";
 
 
 export class Create implements IController {
@@ -11,27 +11,26 @@ export class Create implements IController {
   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
     try {
       const repository = getCustomRepository(UserReposiroty)
-      await repository.validCredencials(request.body.nickname, request.body.email)
 
-      const userCurrent = new User()
-
-      userCurrent.name = request.body.name
-      userCurrent.email = request.body.email
-      userCurrent.nickname = request.body.nickname
-      userCurrent.password = request.body.password
-      userCurrent.description = request.body.description
+      const userCurrent = new User(request.body)
+       userCurrent.password = hashPassword(request.body.password);
+      
+      await userCurrent.valid()
 
       if (request.body.links && request.body.links.length > 0) {
-        userCurrent.links = []
-        request.body.links.forEach((link: Link) => {
-          const linkCurrent = new Link()
+        var promises = []; userCurrent.links = []
 
-          linkCurrent.type = link.type
-          linkCurrent.url = link.url
+        request.body.links.forEach(async (link: Link) => {
+          const linkCurrent = new Link(link)
 
+          promises.push(linkCurrent.valid())
           userCurrent.links.push(linkCurrent)
+          
         })
+        await Promise.all(promises).catch((e) => { throw new InvalidParam(`${e.message} - (${e._original})`) });
       }
+
+      await repository.validCredencials(userCurrent.nickname, userCurrent.email)
       const savedCurrentUser: User = await repository.save(userCurrent)
       return Messager.sucess(buildBody(savedCurrentUser))
     } catch (error) {
