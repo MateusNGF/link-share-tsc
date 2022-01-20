@@ -24,8 +24,8 @@ export class UserReposiroty extends Repository<User> {
 	public async validAccess(email: string, password: string): Promise<User> {
 		const returnDB = await this.findByEmail(email);
 		if (!returnDB) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound);
-		const checkPassword = await comparePassword(password, returnDB.password);
-    if (!checkPassword || checkPassword == null) throw new Unauthorized(message.ptbr.entities.user.errors.incorret("Senha"));
+		 const checkPassword = await comparePassword(password, returnDB.password);
+     if (!checkPassword || checkPassword == null) throw new Unauthorized(message.ptbr.entities.user.errors.incorret("Senha"));
     
 		return returnDB;
 	}

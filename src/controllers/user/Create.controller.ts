@@ -13,7 +13,7 @@ export class Create implements IController {
       const repository = getCustomRepository(UserReposiroty)
 
       const userCurrent = new User(request.body)
-      userCurrent.password = hashPassword(request.body.password);
+       userCurrent.password = hashPassword(request.body.password);
       
       await userCurrent.valid()
 

@@ -5,4 +5,4 @@ export function hashPassword(password: string) {
 }
 export function comparePassword(password: string, hashPassword: string) {
 	return bcrypt.compare(password, hashPassword);
-}
+} 
