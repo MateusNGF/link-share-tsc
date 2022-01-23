@@ -3,6 +3,7 @@ import { IController } from "..";
 import { Link, User } from "../../entity";
 import { UserReposiroty } from "../../repository";
 import { buildBody, InvalidParam, Messager, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { hashPassword } from "../../utils/auth";
 
 
 export class Create implements IController {
@@ -12,7 +13,8 @@ export class Create implements IController {
       const repository = getCustomRepository(UserReposiroty)
 
       const userCurrent = new User(request.body)
-
+       userCurrent.password = hashPassword(request.body.password);
+      
       await userCurrent.valid()
 
       if (request.body.links && request.body.links.length > 0) {
@@ -23,6 +25,7 @@ export class Create implements IController {
 
           promises.push(linkCurrent.valid())
           userCurrent.links.push(linkCurrent)
+          
         })
         await Promise.all(promises).catch((e) => { throw new InvalidParam(`${e.message} - (${e._original})`) });
       }
