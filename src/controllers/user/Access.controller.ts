@@ -13,7 +13,7 @@ export class Access implements IController {
       const repository = getCustomRepository(UserReposiroty)
       var access: User = new User()
 
-      await schemas.user.methods.validProps(["email", "password"], request.body)
+      await schemas.user.methods.validProps(["email"], request.body)
       access = await repository.validAccess(request.body.email, request.body.password)
 
       return Messager.sucess(buildBody(access))

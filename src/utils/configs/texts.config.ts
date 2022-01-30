@@ -39,6 +39,7 @@ export default {
         },
         errors: {
           notFound: "Usuário não foi encontrado",
+          updadeFailed : "Não foi possivel atualizar.",
           incorret: (prop) => { return `${prop} incorreto(a).` },
           duplicated: (prop) => { return `Este(a) ${prop} já esta registrado(a). Tente outro(a).` }
         }
