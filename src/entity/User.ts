@@ -1,13 +1,17 @@
 import Joi from 'joi'
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from 'typeorm'
 import { Link } from '../entity'
-import { schemas } from '../utils'
+import { InvalidParam, schemas } from '../utils'
 
 @Entity('user')
 export class User {
 
   constructor(new_user: User = null) {
-    Object.assign(this, new_user)
+    try {
+      Object.assign(this, new_user)
+    } catch (e) {
+      throw new InvalidParam(e.message)
+    }
   }
 
   @PrimaryGeneratedColumn()
@@ -45,7 +49,7 @@ export class User {
     return false
   }
 
-  valid() {
-    return schemas.user.methods.validProps(["name", "nickname", "password", "email"], this)
+  async valid(thisProps: string[] = null) {
+    return schemas.user.methods.validProps(thisProps || ["name", "nickname", "password", "email"], this)
   }
 }

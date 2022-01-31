@@ -4,3 +4,4 @@ export * from "./Unauthorized"
 export * from "./InvalidParam"
 export * from "./ParamExists"
 export * from "./DataNotFound"
+export * from './BadRequest'

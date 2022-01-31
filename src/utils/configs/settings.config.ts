@@ -4,7 +4,7 @@ export default {
       name: { min: 10, max: 50 },
       nickname: { min: 10, max: 40, prefix: "@", regex: /^@[a-z0-9]$/ },
       description: { min: 30, max: 500 },
-      password: { min: 20, max: 350, regex: /^[a-z]{5,10}\[0-9]{4,7}$/ }
+      password: { min: 5, max: 350, regex: /^[a-z]{5,10}\[0-9]{4,7}$/ }
     },
   },
   link: {

@@ -12,7 +12,8 @@ export const schemas = {
           'string.base': messages.ptbr.entities.user.validation.name.type,
           'string.min': messages.ptbr.entities.user.validation.name.min,
           'string.max': messages.ptbr.entities.user.validation.name.max,
-          'any.required': messages.ptbr.entities.user.validation.name.required
+          'any.required': messages.ptbr.entities.user.validation.name.required,
+          'string.empty': messages.ptbr.entities.user.validation.name.required
         }),
       nickname: Joi.string()
         .lowercase()
@@ -22,7 +23,8 @@ export const schemas = {
           'string.min': messages.ptbr.entities.user.validation.nickname.min,
           'string.max': messages.ptbr.entities.user.validation.nickname.max,
           'any.required': messages.ptbr.entities.user.validation.nickname.required,
-          'string.nickname': messages.ptbr.entities.user.validation.nickname.invalidFormat
+          'string.nickname': messages.ptbr.entities.user.validation.nickname.invalidFormat,
+          'string.empty': messages.ptbr.entities.user.validation.nickname.required
         }),
       description: Joi.string()
         .min(0).max(2500).required()
@@ -31,13 +33,15 @@ export const schemas = {
           'string.min': messages.ptbr.entities.user.validation.description.min,
           'string.max': messages.ptbr.entities.user.validation.description.max,
           'any.required': messages.ptbr.entities.user.validation.description.required,
+          'string.empty': messages.ptbr.entities.user.validation.description.required
         }),
       email: Joi.string()
         .email().lowercase().required()
         .messages({
           'string.base': messages.ptbr.entities.user.validation.email.type,
           'any.required': messages.ptbr.entities.user.validation.email.required,
-          'string.email': messages.ptbr.entities.user.validation.email.invalidFormat
+          'string.email': messages.ptbr.entities.user.validation.email.invalidFormat,
+          'string.empty': messages.ptbr.entities.user.validation.email.required
         }),
       password: Joi.string().trim()
         .min(settings.user.text.password.min).max(settings.user.text.password.max).required()
@@ -46,6 +50,7 @@ export const schemas = {
           'any.required': messages.ptbr.entities.user.validation.password.required,
           'string.min': messages.ptbr.entities.user.validation.password.min,
           'string.max': messages.ptbr.entities.user.validation.password.max,
+          'string.empty': messages.ptbr.entities.user.validation.password.required
         })
     },
     methods: {
@@ -67,12 +72,14 @@ export const schemas = {
         .messages({
           'string.base': messages.ptbr.entities.link.validation.type.type,
           'any.required': messages.ptbr.entities.link.validation.type.required,
+          'string.empty': messages.ptbr.entities.link.validation.type.required
         }),
       url: Joi.string().required().regex(settings.link.text.url.regex)
         .messages({
           'string.base': messages.ptbr.entities.link.validation.url.type,
           'any.required': messages.ptbr.entities.link.validation.url.required,
-          'string.pattern.base': messages.ptbr.entities.link.validation.url.invalidFormat
+          'string.pattern.base': messages.ptbr.entities.link.validation.url.invalidFormat,
+          'string.empty': messages.ptbr.entities.link.validation.url.required
         })
     },
     methods: {
