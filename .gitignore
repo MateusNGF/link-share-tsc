@@ -5,5 +5,5 @@ docs.txt
 test
 .vscode/
 build/
-.prettierrc.json
-.eslintrc.json
+*.prettierrc.json
+*.eslintrc.json

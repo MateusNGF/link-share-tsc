@@ -1,33 +1,35 @@
 {
-   "name": "link-share-tsc",
-   "version": "0.0.1",
-   "description": "Share your link with all peoples.",
-   "devDependencies": {
-      "@types/express": "^4.17.13",
-      "@types/joi": "^17.2.3",
-      "@types/multer": "^1.4.7",
-      "@types/node": "^8.0.29",
-      "ts-node": "^3.3.0",
-      "typescript": "3.3.3333",
-      "@types/bcryptjs": "^2.4.2"
-   },
-   "dependencies": {
-      "@types/jsonwebtoken": "^8.5.6",
-      "bcryptjs": "^2.4.3",
-      "crypto": "^1.0.1",
-      "dotenv": "^10.0.0",
-      "express": "^4.17.2",
-      "joi": "^17.5.0",
-      "jsonwebtoken": "^8.5.1",
-      "multer": "^1.4.4",
-      "pg": "^8.4.0",
-      "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.41"
-   },
-   "scripts": {
-      "start:dev": "ts-node src/server.ts dev",
-      "start": "node build/server.js",
-      "build": "tsc",
-      "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
-   }
+    "name": "link-share-tsc",
+    "version": "0.0.1",
+    "description": "Share your link with all peoples.",
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/joi": "^17.2.3",
+        "@types/multer": "^1.4.7",
+        "@types/node": "^8.0.29",
+        "ts-node": "^3.3.0",
+        "typescript": "3.3.3333",
+        "@types/bcryptjs": "^2.4.2",
+        "@types/jsonwebtoken": "^8.5.6",
+        "@types/uuid": "^8.3.4"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "crypto": "^1.0.1",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.2",
+        "joi": "^17.5.0",
+        "jsonwebtoken": "^8.5.1",
+        "multer": "^1.4.4",
+        "pg": "^8.4.0",
+        "reflect-metadata": "^0.1.10",
+        "typeorm": "0.2.41",
+        "uuid": "^8.3.2"
+    },
+    "scripts": {
+        "start:dev": "ts-node src/server.ts dev",
+        "start": "node build/server.js",
+        "build": "tsc",
+        "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+    }
 }
