@@ -1,8 +1,8 @@
 import { InvalidParam } from ".";
 import { typeCustomResponse } from "./adapter";
 
-export class Messager {
-  static sucess(body: object): typeCustomResponse {
+export class Messenger {
+  static success(body: object): typeCustomResponse {
     return { statusCode: 200, body: { status: true, body } }
   }
 
