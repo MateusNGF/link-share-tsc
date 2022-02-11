@@ -20,3 +20,6 @@
  * you need to enter the link id in the url.
  > ![image](https://user-images.githubusercontent.com/26635578/148279043-f147488c-1d53-45b6-a580-79808d9966b8.png)
  
+  ## ⚠️ USER EMAIL CONFIRM
+ * you need the email and the uuid string on body post data.
+> ![image](https://github.com/ArthurMaciel95/link-share-react/issues/8#issue-1131377610)

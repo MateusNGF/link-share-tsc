@@ -1,4 +1,9 @@
 node_modules
 .env
 docs.txt
-build
+.idea
+test
+.vscode/
+build/
+*.prettierrc.json
+*.eslintrc.json

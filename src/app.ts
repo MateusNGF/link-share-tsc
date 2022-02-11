@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 
 import { linkRouter, userRouter } from './routes'
+import { verify } from './utils';
 
 const app = express()
 
