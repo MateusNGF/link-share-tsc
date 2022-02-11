@@ -6,7 +6,7 @@ const frontend_host = process.env.FRONTEND_HOST as string;
 
 export async function SendEmailValidateCode(email: string, uuid: string, name: string) {
    try {
-      const validateUrl = `${frontend_host}email/confirm/${email}&${uuid}`;
+      const validateUrl = `${frontend_host}/email/confirm/${email}&${uuid}`;
       const message = {
          from: `<${appEmail}>`,
          to: email,
