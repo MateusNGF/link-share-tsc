@@ -1,40 +1,43 @@
 import { getCustomRepository } from "typeorm";
 import { IController } from "..";
-import { Link, User } from "../../entity";
-import { UserReposiroty } from "../../repository";
-import { buildBody, InvalidParam, Messager, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { Link, User, Validate } from "../../entity";
+import { v4 as uuid } from "uuid";
+import { UserRepository, ValidateRepository } from "../../repository";
+import { buildBody, InvalidParam, Messenger, typeCustomRequest, typeCustomResponse } from "../../utils";
 import { hashPassword } from "../../utils/auth";
-
+import { SendEmailValidateCode } from "../../utils/sendEmail/services";
 
 export class Create implements IController {
+   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+      try {
+         const repository = getCustomRepository(UserRepository);
+         const validateRepository = getCustomRepository(ValidateRepository);
 
-  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
-    try {
-      const repository = getCustomRepository(UserReposiroty)
+         const userCurrent = new User(request.body);
+         userCurrent.password = hashPassword(request.body.password);
+         await userCurrent.valid();
 
-      const userCurrent = new User(request.body)
-      userCurrent.password = hashPassword(request.body.password);
-      
-      await userCurrent.valid()
+         if (request.body.links && request.body.links.length > 0) {
+            var promises = [];
+            userCurrent.links = [];
+            request.body.links.forEach(async (link: Link) => {
+               const linkCurrent = new Link(link);
+               promises.push(linkCurrent.valid());
+               userCurrent.links.push(linkCurrent);
+            });
+            await Promise.all(promises).catch((e) => {
+               throw new InvalidParam(`${e.message} - (${e._original})`);
+            });
+         }
 
-      if (request.body.links && request.body.links.length > 0) {
-        var promises = []; userCurrent.links = []
+         await repository.validCredentials(userCurrent.nickname, userCurrent.email);
+         const savedCurrentUser: User = await repository.save(userCurrent);
+         const savedValidate: Validate = await validateRepository.save({ uuid: uuid(), owner: savedCurrentUser });
+         await SendEmailValidateCode(savedValidate.owner.email, savedValidate.uuid, savedCurrentUser.name);
 
-        request.body.links.forEach(async (link: Link) => {
-          const linkCurrent = new Link(link)
-
-          promises.push(linkCurrent.valid())
-          userCurrent.links.push(linkCurrent)
-          
-        })
-        await Promise.all(promises).catch((e) => { throw new InvalidParam(`${e.message} - (${e._original})`) });
+         return Messenger.success(buildBody(savedCurrentUser));
+      } catch (error) {
+         return Messenger.error(error);
       }
-
-      await repository.validCredencials(userCurrent.nickname, userCurrent.email)
-      const savedCurrentUser: User = await repository.save(userCurrent)
-      return Messager.sucess(buildBody(savedCurrentUser))
-    } catch (error) {
-      return Messager.error(error)
-    }
-  }
+   }
 }

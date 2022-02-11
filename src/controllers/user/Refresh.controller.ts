@@ -1,20 +1,20 @@
 import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { User } from "../../entity";
-import { UserReposiroty } from "../../repository";
-import { buildBody, Messager, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { UserRepository,ValidateRepository } from "../../repository";
+import { buildBody, Messenger, typeCustomRequest, typeCustomResponse } from "../../utils";
 
 export class Refresh implements IController {
   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
     try {
       const idCurrentUser = request.header['user']['id']
-      const repository = getCustomRepository(UserReposiroty)
+      const repository = getCustomRepository(UserRepository);
 
       const currentUserUpdated: User = await repository.findById(idCurrentUser)
 
-      return Messager.sucess(buildBody(currentUserUpdated))
+      return Messenger.success(buildBody(currentUserUpdated));
     } catch (error) {
-      return Messager.error(error)
+      return Messenger.error(error);
     }
   }
 }

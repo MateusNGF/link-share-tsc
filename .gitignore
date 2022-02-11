@@ -3,3 +3,7 @@ node_modules
 docs.txt
 .idea
 test
+.vscode/
+build/
+*.prettierrc.json
+*.eslintrc.json
