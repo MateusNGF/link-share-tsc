@@ -22,4 +22,4 @@
  
   ## ⚠️ USER EMAIL CONFIRM
  * you need the email and the uuid string on body post data.
-> ![image](https://github.com/ArthurMaciel95/link-share-react/issues/8#issue-1131377610)
+> ![image](https://user-images.githubusercontent.com/70984781/153587386-75940bc2-6f9e-41f6-bc17-1b4fd09a3ace.png)
