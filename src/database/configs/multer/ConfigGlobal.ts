@@ -5,18 +5,18 @@ import { FileError } from "../../../utils/errors/custom/FileError";
 
 
 export abstract class ConfigStorage {
-  pathResolve: string = undefined
-  nameColletion: string = undefined
-  extPermiteds: String[] = undefined;
+  pathResolve: string;
+  nameColletion: string;
+  extPermiteds: String[];
   fileLimitSize: number = 20 * 1024 * 1024
-  storageReferencia: string = process.env.STORAGE_TYPE
+  storageReferencia: string = process.env.STORAGE_TYPE || "local"
   pathDatabase: string = `${__dirname}/../../documents/`
 
   build(): multer.Options {
     this.pathResolve = path.resolve(this.pathDatabase, `./${this.nameColletion}/`)
     return {
       dest: this.pathResolve,
-      storage: (this.storageReferencia === "local") ? this.typeLocal() : this.typeLocal(),
+      storage: (this.storageReferencia === "local") ? this.typeLocal() : this.typeCloud(),
       limits: {
         fileSize: this.fileLimitSize
       },
@@ -42,6 +42,11 @@ export abstract class ConfigStorage {
       }
     })
   }
+
+  private typeCloud(): multer.StorageEngine {
+    return this.typeLocal()
+  }
+
   static filterExt(permitedExt: String[], mimetype: string): boolean {
     if (permitedExt.includes(mimetype)) {
       return true
