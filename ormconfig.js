@@ -20,16 +20,11 @@ var ormconfig = {
       "entitiesDir": "src/entity",
       "migrationsDir": "src/database/migration",
       "subscribersDir": "src/subscriber"
-   }
+   },
+   "ssl": true,
+   "extra": { "ssl": { "rejectUnauthorized": false } }
 }
 
-if (!DEV) {
-   ormconfig.ssl = true
-   ormconfig.extra = { "ssl": { "rejectUnauthorized": false } }
-   console.warn("===> ⚠️  started in production.  ⚠️ <===")
-} else {
-   console.warn("===> ⚠️  Booting as a developer.  ⚠️ <===")
-}
 module.exports = ormconfig
 
 
