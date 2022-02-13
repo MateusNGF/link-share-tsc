@@ -22,6 +22,7 @@ export class Create implements IController {
             userCurrent.links = [];
             request.body.links.forEach(async (link: Link) => {
                const linkCurrent = new Link(link);
+               // corrigir a validação de url
                promises.push(linkCurrent.valid());
                userCurrent.links.push(linkCurrent);
             });
@@ -37,6 +38,7 @@ export class Create implements IController {
 
          return Messenger.success(buildBody(savedCurrentUser));
       } catch (error) {
+         console.log(error)
          return Messenger.error(error);
       }
    }
