@@ -9,7 +9,7 @@ export abstract class ConfigStorage {
   nameColletion: string;
   extPermiteds: String[];
   fileLimitSize: number = 20 * 1024 * 1024
-  storageReferencia: string = process.env.STORAGE_TYPE ?? "local"
+  storageReferencia: string = process.env.STORAGE_TYPE || "local"
   pathDatabase: string = `${__dirname}/../../documents/`
 
   build(): multer.Options {
