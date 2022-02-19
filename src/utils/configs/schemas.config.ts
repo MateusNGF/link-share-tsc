@@ -31,19 +31,27 @@ export const schemas = {
                "string.nickname": messages.ptbr.entities.user.validation.nickname.invalidFormat,
                "string.empty": messages.ptbr.entities.user.validation.nickname.required,
             }),
-         description: Joi.string().min(0).max(2500).required().messages({
-            "string.base": messages.ptbr.entities.user.validation.description.type,
-            "string.min": messages.ptbr.entities.user.validation.description.min,
-            "string.max": messages.ptbr.entities.user.validation.description.max,
-            "any.required": messages.ptbr.entities.user.validation.description.required,
-            "string.empty": messages.ptbr.entities.user.validation.description.required,
-         }),
-         email: Joi.string().email().lowercase().required().messages({
-            "string.base": messages.ptbr.entities.user.validation.email.type,
-            "any.required": messages.ptbr.entities.user.validation.email.required,
-            "string.email": messages.ptbr.entities.user.validation.email.invalidFormat,
-            "string.empty": messages.ptbr.entities.user.validation.email.required,
-         }),
+         description: Joi.string()
+            .min(settings.user.text.description.min)
+            .max(settings.user.text.description.max)
+            .required()
+            .messages({
+               "string.base": messages.ptbr.entities.user.validation.description.type,
+               "string.min": messages.ptbr.entities.user.validation.description.min,
+               "string.max": messages.ptbr.entities.user.validation.description.max,
+               "any.required": messages.ptbr.entities.user.validation.description.required,
+               "string.empty": messages.ptbr.entities.user.validation.description.required,
+            }),
+         email: Joi.string()
+            .email()
+            .lowercase()
+            .required()
+            .messages({
+               "string.base": messages.ptbr.entities.user.validation.email.type,
+               "any.required": messages.ptbr.entities.user.validation.email.required,
+               "string.email": messages.ptbr.entities.user.validation.email.invalidFormat,
+               "string.empty": messages.ptbr.entities.user.validation.email.required,
+            }),
          password: Joi.string()
             .trim()
             .min(settings.user.text.password.min)

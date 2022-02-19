@@ -16,12 +16,14 @@ export class CreateNewLink implements IController {
             newLink: Link = new Link(request.body);
 
          await newLink.valid();
+
          if (!currentUser) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound);
          if (currentUser.links.find((link) => link.url.toString() === newLink.url.toString()))
             throw new ParamExists(message.ptbr.entities.link.errors.duplicated);
-
+         
+         newLink.owner = idCurrentUser
          await repositoryLink.save(newLink);
-
+         
          return Messenger.success({});
       } catch (error) {
          return Messenger.error(error);
