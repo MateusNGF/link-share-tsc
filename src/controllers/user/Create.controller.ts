@@ -15,7 +15,9 @@ export class Create implements IController {
 
          const userCurrent = new User(request.body);
          userCurrent.password = hashPassword(request.body.password);
+
          await userCurrent.valid();
+         userCurrent.nickname = `@${userCurrent.nickname}`
 
          if (request.body.links && request.body.links.length > 0) {
             var promises = [];
@@ -34,11 +36,10 @@ export class Create implements IController {
          await repository.validCredentials(userCurrent.nickname, userCurrent.email);
          const savedCurrentUser: User = await repository.save(userCurrent);
          const savedValidate: Validate = await validateRepository.save({ uuid: uuid(), owner: savedCurrentUser });
-         await SendEmailValidateCode(savedValidate.owner.email, savedValidate.uuid, savedCurrentUser.name);
 
+         await SendEmailValidateCode(savedValidate.owner.email, savedValidate.uuid, savedCurrentUser.name);
          return Messenger.success(buildBody(savedCurrentUser));
       } catch (error) {
-         console.log(error)
          return Messenger.error(error);
       }
    }
