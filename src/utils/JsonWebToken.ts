@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { boolean } from "joi";
 import jwt from "jsonwebtoken";
 import { User } from "../entity";
 import { MissingParameters } from "./errors";
@@ -41,8 +42,10 @@ export const create = (
    });
 };
 
-export const buildBody = (user: User): any => {
-   user["token"] = create({ id: user.id });
+export const buildBody = (user: User, requiredToken:boolean = true): any => {
+   if (requiredToken) {
+      user["token"] = create({ id: user.id });
+   }
 
    delete user["password"];
    delete user["id"];

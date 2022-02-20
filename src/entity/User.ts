@@ -34,7 +34,7 @@ export class User {
     @Column({ nullable: true, default: null })
     pic_profile?: string;
 
-    @Column({ nullable: true, default: null, length: 500 })
+    @Column({ nullable: true, default: null})
     description?: string;
 
     @OneToMany(() => Link, (links) => links.owner, { eager: true, cascade: true })

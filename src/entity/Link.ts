@@ -26,6 +26,6 @@ export class Link {
   updateAt?: Date
 
   valid() {
-    return schemas.link.methods.validProps(["type", "url"], this)
+    return schemas.link.methods.validProps(["type"], this)
   }
 }
