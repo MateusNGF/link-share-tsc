@@ -17,6 +17,9 @@ export class Create implements IController {
          userCurrent.password = hashPassword(request.body.password);
 
          await userCurrent.valid();
+         
+         validateRepository.nicknameFormatIsValid(userCurrent.nickname);
+
          userCurrent.nickname = `@${userCurrent.nickname}`
 
          if (request.body.links && request.body.links.length > 0) {

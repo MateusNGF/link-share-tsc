@@ -14,7 +14,7 @@ export class UserRepository extends Repository<User> {
    public async findByNick(nickname: string): Promise<User> {
       return await this.findOne({ where: { nickname } });
    }
-
+   
    public async findById(id: string): Promise<User> {
       const currentUserFound: User = await this.findOne({ id });
       if (!currentUserFound) throw new DataNotFound(message.ptbr.entities.user.errors.notFound);
