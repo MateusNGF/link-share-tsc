@@ -18,7 +18,7 @@ export class Create implements IController {
 
          await userCurrent.valid();
          
-         validateRepository.nicknameFormatIsValid(userCurrent.nickname);
+         userCurrent.nicknameFormatIsValid(userCurrent.nickname);
 
          userCurrent.nickname = `@${userCurrent.nickname}`
 
