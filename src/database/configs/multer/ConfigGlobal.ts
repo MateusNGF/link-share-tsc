@@ -1,19 +1,20 @@
 import multer from "multer";
 import path from 'path'
 import crypto from 'crypto'
+//import * as s3 from "../../../utils/aws" // import s3 functions
 import { FileError } from "../../../utils/errors/custom/FileError";
 
 
 export abstract class ConfigStorage {
   pathResolve: string;
-  nameColletion: string;
-  extPermiteds: String[];
+  nameCollection: string;
+  extPermitted: String[];
   fileLimitSize: number = 20 * 1024 * 1024;
   storageReferencia: string = process.env.StorageType || "local";
   pathDatabase: string = `${__dirname}/../../documents/`;
 
   build(): multer.Options {
-    this.pathResolve = path.resolve(this.pathDatabase, `./${this.nameColletion}/`)
+    this.pathResolve = path.resolve(this.pathDatabase, `./${this.nameCollection}/`)
     return {
       dest: this.pathResolve,
       storage: (this.storageReferencia === "local") ? this.typeLocal() : this.typeCloud(),
@@ -21,9 +22,9 @@ export abstract class ConfigStorage {
         fileSize: this.fileLimitSize
       },
       fileFilter: (r, f, cb) => {
-        const filter = ConfigStorage.filterExt(this.extPermiteds, f.mimetype)
+        const filter = ConfigStorage.filterExt(this.extPermitted, f.mimetype)
         if (filter) { cb(undefined, true) }
-        else { cb(new FileError(`Mimetype ${f.mimetype} not permited.`)) }
+        else { cb(new FileError(`Mimetype ${f.mimetype} not permitted.`)) }
       }
     }
   }
@@ -44,11 +45,23 @@ export abstract class ConfigStorage {
   }
 
   private typeCloud(): multer.StorageEngine {
-    return this.typeLocal()
-  }
+		/*Obter url do banco remover parte inicial 
+      ate o patch e verificar se ja tem um arquivo do usuário no bucket*/
+    //s3.findFile(pasta_remota, nome_arquivo);
 
-  static filterExt(permitedExt: String[], mimetype: string): boolean {
-    if (permitedExt.includes(mimetype)) {
+		//Se tiver excluir arquivo no bucket
+		//s3.deleteFile(pasta_remota, nome_remoto);
+
+		//Subir novo arquivo
+		//s3.uploadFile(fileLocal, pasta_remota, nome_remoto, ext_arquivo);
+
+		//Salvar no banco em relação ao usuário a url completa retornada pelo uploadFile
+
+		return this.typeLocal();
+	}
+
+  static filterExt(permittedExt: String[], mimetype: string): boolean {
+    if (permittedExt.includes(mimetype)) {
       return true
     } else {
       return false

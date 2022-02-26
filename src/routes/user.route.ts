@@ -15,5 +15,6 @@ userRouter.get("/refresh", verify, ExpressAdapterRouter.adapt(new Refresh()));
 userRouter.put("/update", verify, ExpressAdapterRouter.adapt(new Update()));
 userRouter.get("/visitor/:nickname", ExpressAdapterRouter.adapt(new GetUser()))
 userRouter.put("/pic", verify, multer(new StoragePicProfile().config()).single("pic_profile"), (req, res) => {
-   console.log(req.file);
+	console.log(req.file);
+	return res.sendStatus(200);
 });
