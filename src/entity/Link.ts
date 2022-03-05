@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { User } from '../entity'
 import { BadRequest, schemas } from '../utils'
-import ping from 'ping'
+// import ping from 'ping'
 
 @Entity('link')
 export class Link {
