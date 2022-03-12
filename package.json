@@ -20,6 +20,7 @@
       "typescript": "3.3.3333"
    },
    "dependencies": {
+      "aws-sdk": "^2.1092.0",
       "bcryptjs": "^2.4.3",
       "crypto": "^1.0.1",
       "dotenv": "^10.0.0",
