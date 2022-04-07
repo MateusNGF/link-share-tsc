@@ -12,11 +12,11 @@ export class CreateNewLink implements IController {
          const idCurrentUser = request.header["user"]["id"],
             repositoryLink = getCustomRepository(LinkRepository),
             repositoryUser = getCustomRepository(UserRepository),
-            currentUser: User = await repositoryUser.findById(idCurrentUser),
             newLink: Link = new Link(request.body);
-
-         await newLink.valid();
-
+            
+         await newLink.valid()
+         
+         const currentUser: User = await repositoryUser.findById(idCurrentUser)
          if (!currentUser) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound);
          if (currentUser.links.find((link) => link.url.toString() === newLink.url.toString()))
             throw new ParamExists(message.ptbr.entities.link.errors.duplicated);

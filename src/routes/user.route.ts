@@ -2,7 +2,7 @@ import multer from "multer";
 import { Router } from "express";
 
 import { ExpressAdapterRouter, verify } from "../utils";
-import { Create, Access, Refresh, Update, ValidateEmail } from "../controllers/user";
+import { Create, Access, Refresh, Update, ValidateEmail ,PicProfiles} from "../controllers/user";
 import { StoragePicProfile } from "../database/configs/multer";
 import { GetUser } from "../controllers/user/GetUser";
 
@@ -17,3 +17,4 @@ userRouter.get("/visitor/:nickname", ExpressAdapterRouter.adapt(new GetUser()))
 userRouter.post("/pic", verify, multer(new StoragePicProfile().config()).single("pic_profile"), (req, res) => {
    console.log(req.file);
 });
+

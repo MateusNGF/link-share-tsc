@@ -42,7 +42,7 @@ export default {
                updateFailed: "Não foi possível atualizar.",
                incorrect: (prop) => { return `${prop} incorreto(a).`; },
                duplicated: (prop) => { return `Este(a) ${prop} já esta registrado(a). Tente outro(a).`; },
-               notVerified: (prop) => { return `Esta conta ainda não teve seu email ${prop} verificado`; },
+               notVerified: (prop) => { return `Esta conta '${prop}' ainda não teve seu email verificado`; },
             },
          },
          link: {
@@ -56,6 +56,7 @@ export default {
                   type: "A url deve ser uma string.",
                   required: "A url é necessário.",
                   invalidFormat: "Url mal formatada ou não suportada, exemplo : https://www.any.com*",
+                  linkIsDead: "A url informada não esta ativa."
                },
             },
             errors: {

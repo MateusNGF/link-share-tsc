@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { User } from '../entity'
-import { schemas } from '../utils'
+import { BadRequest, schemas } from '../utils'
+// import ping from 'ping'
 
 @Entity('link')
 export class Link {
@@ -25,7 +26,8 @@ export class Link {
   @UpdateDateColumn({ name: 'update_At' })
   updateAt?: Date
 
-  valid() {
-    return schemas.link.methods.validProps(["type"], this)
+  async valid() {
+    await schemas.link.methods.validProps(["type", "url"], this)
+    // await ping.promise.probe(this.url, { timeout: 10, extra: ['-i', '2']})
   }
 }
