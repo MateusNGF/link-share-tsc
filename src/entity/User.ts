@@ -1,8 +1,8 @@
 import Joi from "joi";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Link } from "../entity";
-import { InvalidParam, schemas } from "../utils";
-
+import { InvalidFormat, InvalidParam, schemas } from "../utils";
+import message from "../utils/configs/texts.config";
 @Entity("user")
 export class User {
     constructor(new_user: User = null) {
@@ -54,4 +54,8 @@ export class User {
     async valid(thisProps: string[] = null) {
         return schemas.user.methods.validProps(thisProps || ["name", "nickname", "password", "email"], this);
     }
+
+    public nicknameFormatIsValid = (nickname:string) =>{
+        if(new RegExp(/^[^\\s-]$/).test(nickname))  throw new InvalidFormat(message.ptbr.entities.user.validation.nickname.invalidFormat)
+     }
 }
