@@ -55,7 +55,7 @@ export class User {
         return schemas.user.methods.validProps(thisProps || ["name", "nickname", "password", "email"], this);
     }
 
-    public nicknameFormatIsValid = (nickname:string) =>{
+    nicknameFormatIsValid(nickname:string) {
         if(new RegExp(/^[^\\s-]$/).test(nickname))  throw new InvalidFormat(message.ptbr.entities.user.validation.nickname.invalidFormat)
-     }
+    }
 }
