@@ -20,12 +20,12 @@ export class PicProfiles implements IController {
 			let fileUrl = null;
 
 			if (storageLocation == "local") {
-				if (userCurrent.pic_profile != null)
+				if (userCurrent.pic_profile != null){
 					fs.unlink(userCurrent.pic_profile, function (err) {
 						if (err) console.warn("Fail to delete the local file! error:", err);
-					});
-				
-				fileUrl = request.file.path;
+					})
+				}
+				fileUrl = request.file.path;				
 			} else if (storageLocation == "cloud") {
 				if (userCurrent.pic_profile != null) {
 					const indexOfFileName = userCurrent.pic_profile.lastIndexOf(collectionProfiles);
@@ -39,14 +39,13 @@ export class PicProfiles implements IController {
 				}
 			} else throw new Error("Invalid Storage Type");
 
-			const userUpdate: User = new User(request.body);
-			userUpdate.pic_profile = fileUrl;
-			if ((await repository.update(userCurrent.id, userUpdate)).affected > 0) {
-				userCurrent = await repository.findById(request.header["user"]["id"]);
-			} else {
+			userCurrent.pic_profile = fileUrl;
+
+			userCurrent.save().catch(erro => {			
 				throw new BadRequest(message.ptbr.entities.user.errors.updateFailed);
-			}
-			return Messenger.success(buildBody(userCurrent));
+			})
+
+			return Messenger.success({ pic_profile_url : userCurrent.pic_profile});
 		} catch (error) {
 			return Messenger.error(error);
 		}

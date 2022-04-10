@@ -1,16 +1,12 @@
 import Joi from "joi";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Link } from "../entity";
 import { InvalidFormat, InvalidParam, schemas } from "../utils";
 import message from "../utils/configs/texts.config";
 @Entity("user")
-export class User {
+export class User extends BaseEntity {
     constructor(new_user: User = null) {
-        try {
-            Object.assign(this, new_user);
-        } catch (e) {
-            throw new InvalidParam(e.message);
-        }
+        super();Object.assign(this, new_user);
     }
 
     @PrimaryGeneratedColumn()
