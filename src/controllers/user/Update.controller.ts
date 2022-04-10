@@ -22,13 +22,13 @@ export class Update implements IController {
 			const userUpdate: User = new User(request.body);
 			await userUpdate.valid(["name"]);
          
-         //So verificamos o nickname se ja existe um igual no banco caso o user esteja alterando o seu nickName
-         if (userCurrent.nickname != userUpdate.nickname)
-            await repository.validateDuplicatedNickName(userUpdate.nickname);
-         
-         //So verificamos o email caso o usuário esteja alterando o seu email
+			//So verificamos o nickname se ja existe um igual no banco caso o user esteja alterando o seu nickName
+			if (userCurrent.nickname != userUpdate.nickname)
+				await repository.validateDuplicatedNickName(userUpdate.nickname);
+
+			//So verificamos o email caso o usuário esteja alterando o seu email
 			if (userCurrent.email != userUpdate.email) {
-            await repository.validateDuplicatedEmail(userUpdate.email);
+				await repository.validateDuplicatedEmail(userUpdate.email);
 				userCurrent.verified = false;
 				const validateRepository = getCustomRepository(ValidateRepository);
 				const savedValidate: Validate = await validateRepository.save({ uuid: uuid(), owner: userUpdate });
