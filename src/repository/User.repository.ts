@@ -3,7 +3,6 @@ import { EntityRepository, Repository } from "typeorm";
 import { User } from "../entity";
 import message from "../utils/configs/texts.config";
 import { InvalidCredencial, DataNotFound, ParamExists, Unauthorized } from "../utils";
-import { comparePassword } from "../utils/auth";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -25,7 +24,7 @@ export class UserRepository extends Repository<User> {
 		const returnDB = await this.findByEmail(email);
 		if (!returnDB) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound);
 		if (!returnDB.verified) throw new Unauthorized(message.ptbr.entities.user.errors.notVerified(returnDB.email));
-		if (!(await comparePassword(password, returnDB.password))) throw new Unauthorized(message.ptbr.entities.user.errors.incorrect("Senha"));
+		if (password != returnDB.password) throw new Unauthorized(message.ptbr.entities.user.errors.incorrect("Senha"));
 		return returnDB;
 	}
 
