@@ -40,4 +40,8 @@ export class UserRepository extends Repository<User> {
    public async validateDuplicatedEmail(email: string) {
 	if (await this.findByEmail(email)) throw new ParamExists(message.ptbr.entities.user.errors.duplicated("E-mail"));
    }
+
+	public async updatePassword(userId: string, newPassword: string) {
+		return !!((await this.update({ id: userId }, { password: newPassword })).affected > 0)
+	}
 }

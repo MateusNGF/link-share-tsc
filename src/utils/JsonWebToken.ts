@@ -22,9 +22,9 @@ export const verify = (req: Request, res: Response, next: NextFunction): any => 
    }
 };
 
-export const decoded = (token: string): {} => {
+export const decoded = (token: string, password ?: string): any => {
    let decodedUser: any;
-   jwt.verify(token, process.env.jwtPassword, (failed, decoded) => {
+   jwt.verify(token, password || process.env.jwtPassword, (failed, decoded) => {
       if (failed) throw new Unauthorized("Access key invalid");
       decodedUser = decoded;
    });

@@ -33,6 +33,14 @@ export class Email {
 
   public async send(options : Mail.Options){
     if (!options.from) {options.from = this.user}
+
+    if (!options.subject) throw Error("Subject is required")
+
+    if (!options.to) throw Error("to is required")
+    Email.isEmail(String(options.to))
+ 
+    if (!options.html) throw Error("HTML is required")
+
     await this.transporter.sendMail(options)
     this.transporter.close()
     return true
