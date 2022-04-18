@@ -2,7 +2,7 @@ import multer from "multer";
 import { Router } from "express";
 
 import { ExpressAdapterRouter, verify } from "../utils";
-import { Create, Access, Refresh, Update, ValidateEmail ,PicProfiles} from "../controllers/user";
+import { Create, Access, Refresh, Update, ValidateEmail ,PicProfiles, ResetPassword} from "../controllers/user";
 import { StoragePicProfile } from "../database/configs/multer";
 import { GetUser } from "../controllers/user/GetUser";
 
@@ -19,3 +19,4 @@ userRouter.post("/pic", verify, multer(
    ExpressAdapterRouter.adapt(new PicProfiles())
 );
 
+userRouter.put("/reset_password/:step", ExpressAdapterRouter.adapt(new ResetPassword()))
