@@ -45,8 +45,8 @@
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
 
       "start:dev": "nodemon -r dotenv/config src/server.ts dev",
-      "start": "npm run build && npm run copyFiles && node build/server.js",
-      "build": "rimraf ./build && tsc",
+      "start": "node build/server.js",
+      "build": "rimraf ./build && tsc && npm run copyFiles",
 
       "copyFiles" : "npm run copyFilesHTML",
       "copyFilesHTML": "copyfiles -u 1 src/**/*.html build/"
