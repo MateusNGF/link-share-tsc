@@ -43,8 +43,8 @@
    },
    "scripts": {
       "start:dev": "nodemon -r dotenv/config src/server.ts dev",
-      "start": "npm run build && npm run copyFilesHTML && node build/server.js",
-      "build": "rimraf ./build && tsc",
+      "start": "npm run build && node build/server.js",
+      "build": "rimraf ./build && npx tsc && npm run copyFilesHTML",
       "copyFilesHTML": "copyfiles -u 1 src/**/*.html build/",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
    }
