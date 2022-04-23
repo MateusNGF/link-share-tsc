@@ -1,10 +1,10 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "../entity";
 
 @Entity("validates")
-export class Validate {
+export class Validate extends BaseEntity {
     constructor(validate: Validate) {
-        Object.assign(this, validate);
+        super();Object.assign(this, validate);
     }
     @PrimaryGeneratedColumn()
     id_validate?: string;
@@ -15,7 +15,7 @@ export class Validate {
     @Column({ nullable: false })
     uuid: string;
 
-    @ManyToOne(() => User, (owner) => owner.links)
+    @ManyToOne(() => User, (owner) => owner.id)
     owner?: User;
 
     @CreateDateColumn({ name: "created_At" })

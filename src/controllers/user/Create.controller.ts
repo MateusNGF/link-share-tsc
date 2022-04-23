@@ -4,7 +4,6 @@ import { Link, User, Validate } from "../../entity";
 import { v4 as uuid } from "uuid";
 import { UserRepository, ValidateRepository } from "../../repository";
 import { buildBody, InvalidParam, Messenger, typeCustomRequest, typeCustomResponse } from "../../utils";
-import { hashPassword } from "../../utils/auth";
 import { SendEmailValidateCode } from "../../utils/sendEmail/services";
 
 export class Create implements IController {
@@ -14,7 +13,7 @@ export class Create implements IController {
          const validateRepository = getCustomRepository(ValidateRepository);
 
          const userCurrent = new User(request.body);
-         userCurrent.password = hashPassword(request.body.password);
+         // userCurrent.password = hashPassword(request.body.password);
 
          await userCurrent.valid();
          

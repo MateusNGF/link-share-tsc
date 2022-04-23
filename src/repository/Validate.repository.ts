@@ -9,6 +9,10 @@ export class ValidateRepository extends Repository<Validate> {
       return await this.findOne({ where: { uuid } });
    }
    
+   async removeValidate(validate : Validate){
+      return await this.remove(validate) ? true  :false
+   }
+
    async isEmailValid(email: string, uuid: string): Promise<boolean> {
       const returnDB = await this.findByUUID(uuid);
       if (!returnDB) throw new DataNotFound(message.ptbr.entities.validate.errors.notFound);
