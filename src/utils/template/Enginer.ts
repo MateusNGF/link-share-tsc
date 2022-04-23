@@ -3,7 +3,7 @@ import * as Handlebars from 'handlebars'
 import * as Files from 'fs'
 import {resolve} from 'path'
 
-class Enginer {
+class ClassEnginer {
 
     public readonly path_templates = `${__dirname}/html`
 
@@ -13,4 +13,4 @@ class Enginer {
     }
 }
 
-export const Templates = new Enginer()
+export const Templates = new ClassEnginer()
