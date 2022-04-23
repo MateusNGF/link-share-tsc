@@ -7,6 +7,7 @@
    },
    "devDependencies": {
       "@types/bcryptjs": "^2.4.2",
+      "@types/copyfiles": "^2.4.1",
       "@types/express": "^4.17.13",
       "@types/handlebars": "^4.1.0",
       "@types/joi": "^17.2.3",
@@ -15,8 +16,11 @@
       "@types/node": "^8.0.29",
       "@types/nodemailer": "^6.4.4",
       "@types/nodemon": "^1.19.1",
+      "@types/rimraf": "^3.0.2",
       "@types/uuid": "^8.3.4",
+      "copyfiles": "^2.4.1",
       "nodemon": "^2.0.15",
+      "rimraf": "^3.0.2",
       "ts-node": "^3.3.0",
       "typescript": "3.3.3333"
    },
@@ -39,8 +43,9 @@
    },
    "scripts": {
       "start:dev": "nodemon -r dotenv/config src/server.ts dev",
-      "start": "node build/server.js",
-      "build": "tsc",
+      "start": "npm run build && npm run copyFilesHTML && node build/server.js",
+      "build": "rimraf ./build && tsc",
+      "copyFilesHTML": "copyfiles -u 1 src/**/*.html build/",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
    }
 }
