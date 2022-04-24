@@ -1,12 +1,16 @@
 import AWS from "aws-sdk";
-
 class ClassBucketS3  {
     
     constructor(
-        public readonly bucket = process.env.AWS_S3_BUCKET,
-        public readonly AWS_S3 = new AWS.S3({ 
-            apiVersion: "2006-03-01", 
-            region: process.env.AWS_REGION
+        public bucket: string = process.env.AWS_S3_BUCKET,
+        public S3: AWS.S3 = new AWS.S3({
+            apiVersion: "2006-03-01",
+            signatureVersion: 'v4',
+            region: process.env.AWS_REGION || "us-west-2",
+            correctClockSkew: true,
+            httpOptions: {
+                connectTimeout: 360.000 // 6 minutos
+            },
         })
     ){}
 

@@ -3,7 +3,7 @@ import multerS3 from 'multer-s3'
 import path from "path";
 import crypto from "crypto-js";
 import { FileError } from "../../../utils/errors/custom/FileError";
-import { BucketS3 } from "../../../utils/BucketS3";
+import { BucketS3 } from "../../../utils";
 
 export abstract class ConfigStorage {
 
@@ -58,8 +58,10 @@ export abstract class ConfigStorage {
 
 	private uploadCloud( options ?: any){
 		return multerS3({
-			s3: BucketS3.AWS_S3,
+			s3: BucketS3.S3,
 			bucket: BucketS3.bucket,
+			contentType : multerS3.AUTO_CONTENT_TYPE,
+			serverSideEncryption: 'AES256',
 			key: function (req, file, callback) {
 				callback(undefined, `${options.colletion}/${options.new_name}.${ConfigStorage.getMimetype(file)}`)
 			},
