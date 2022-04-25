@@ -24,10 +24,13 @@ export class PicProfiles implements IController {
 
 			if (!user) throw new DataNotFound("Usuario não encontrado.");
 
-			// const timeChangePic = moment(user.pic_profile).add(2, 'hour')
-			// if (moment().isBefore(timeChangePic)){
-			// 	throw new BadRequest("Você só pode atualizar novamente depois das "+ moment(timeChangePic).format("hh:mm"))
-			// }
+			if (user.lastUpdatePicProfile){
+				const changePicIn = moment(user.lastUpdatePicProfile).add(2, 'hour')
+				const remainigTime = changePicIn.diff(moment(), 'minute')
+				if (moment().isBefore(changePicIn)){
+					throw new BadRequest(`Você pode atualizar novamente as ${moment().add(remainigTime, "minute").format("HH:mm")} horas`)
+				}
+			}
 
 			if (storageLocation === "cache"){
 				let key = StoragePicProfile.generateHashName() + "." + StoragePicProfile.getMimetype(picture)
@@ -39,8 +42,7 @@ export class PicProfiles implements IController {
 				}else{ throw new Error("Cara ... deu pau!") }
 			}
 
-			user.lastUpdatePicProfile = new Date().toISOString()
-			
+			user.lastUpdatePicProfile = moment().toISOString()
 			user.save().catch(erro => {			
 				throw new BadRequest(message.ptbr.entities.user.errors.updateFailed);
 			})
