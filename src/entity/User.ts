@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Link } from "../entity";
 import { InvalidFormat, InvalidParam, schemas } from "../utils";
@@ -32,7 +31,10 @@ export class User extends BaseEntity {
 
     @Column({ nullable: true, default: null})
     description?: string;
-
+    
+    @Column({name: "last_update_pic_profile", nullable : true, default : null})
+    lastUpdatePicProfile?: string;
+    
     @OneToMany(() => Link, (links) => links.owner, { eager: true, cascade: true })
     links?: Link[];
 
@@ -41,6 +43,7 @@ export class User extends BaseEntity {
 
     @UpdateDateColumn({ name: "update_At" })
     updateAt?: Date;
+
 
     isOwner(link: Link): boolean {
         if (this.id.toString() === link.owner.toString()) return true;

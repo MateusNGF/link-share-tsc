@@ -37,6 +37,9 @@ export abstract class ConfigStorage {
 			case "cloud":
 				settings.storage = this.uploadCloud(options)
 				break;
+			case "cache":
+				settings.storage = multer.memoryStorage()
+				break;
 			default:
 				throw new Error("Type storage location invalid. -> "+ this.storageLocation)
 		}
@@ -62,6 +65,7 @@ export abstract class ConfigStorage {
 			bucket: BucketS3.bucket,
 			contentType : multerS3.AUTO_CONTENT_TYPE,
 			serverSideEncryption: 'AES256',
+			acl: "public-read",
 			key: function (req, file, callback) {
 				callback(undefined, `${options.colletion}/${options.new_name}.${ConfigStorage.getMimetype(file)}`)
 			},
