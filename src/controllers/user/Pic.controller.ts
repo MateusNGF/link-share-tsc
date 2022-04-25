@@ -15,6 +15,10 @@ export class PicProfiles implements IController {
 		try {
 
 			const userID = request.header["user"]["id"]
+			const timeForChangePic : timeParams = {
+				time : 2,
+				type : "hour"
+			}
 
 			if (!!request && !request.file) throw new BadRequest("Arquivo recebido.")
 			const picture = request.file
@@ -24,11 +28,13 @@ export class PicProfiles implements IController {
 
 			if (!user) throw new DataNotFound("Usuario não encontrado.");
 
-			if (user.lastUpdatePicProfile){
-				const changePicIn = moment(user.lastUpdatePicProfile).add(2, 'hour')
-				const remainigTime = changePicIn.diff(moment(), 'minute')
+			if (!!user.lastUpdatePicProfile){
+				const changePicIn = moment(user.lastUpdatePicProfile).add(timeForChangePic.time, timeForChangePic.type)
+				const remainingTimeInMinutes = changePicIn.diff(moment(), 'minute')
 				if (moment().isBefore(changePicIn)){
-					throw new BadRequest(`Você pode atualizar novamente as ${moment().add(remainigTime, "minute").format("HH:mm")} horas`)
+					throw new BadRequest(`Você atualizou recentemente sua foto.`, {
+						remainingTimeInMinutes, timeForChangePic
+					})
 				}
 			}
 
@@ -53,3 +59,7 @@ export class PicProfiles implements IController {
 		}
 	}
 }
+
+
+
+export type timeParams = {time : number, type : moment.unitOfTime.DurationConstructor}
