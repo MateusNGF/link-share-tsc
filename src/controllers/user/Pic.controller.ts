@@ -1,7 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { User } from "../../entity";
 import { UserRepository } from "../../repository";
-import { DataNotFound, BadRequest, Messenger, typeCustomRequest, typeCustomResponse, BucketS3 } from "../../utils";
+import { DataNotFound, BadRequest, Messenger, typeCustomRequest, typeCustomResponse, BucketS3, File } from "../../utils";
 import { IController } from "../protocols";
 import message from "../../utils/configs/texts.config";
 import { StoragePicProfile } from "../../database/configs";
@@ -21,7 +21,7 @@ export class PicProfiles implements IController {
 			}
 
 			if (!!request && !request.file) throw new BadRequest("Arquivo recebido.")
-			const picture = request.file
+			const picture : Express.Multer.File = request.file
 
 			const repository = getCustomRepository(UserRepository);
 			let user: User = await repository.findById(userID);
@@ -39,9 +39,14 @@ export class PicProfiles implements IController {
 			}
 
 			if (storageLocation === "cache"){
-				let key = StoragePicProfile.generateHashName() + "." + StoragePicProfile.getMimetype(picture)
-				picture.key = `${collectionProfiles}/${userID}/${key}`
-				user.pic_profile = (await BucketS3.uploadFile(picture.key, request.file)).Location
+				let key = File.generateHashName() + "." + File.breakMimetype(picture.mimetype).subType
+				let pictureKey = `${collectionProfiles}/${userID}/${key}`
+				let pictureUploaded = await BucketS3.uploadFile(pictureKey, picture)
+				if (!!pictureUploaded){
+					user.pic_profile = pictureUploaded.Location
+				}else{
+					throw new BadRequest("Não foi possivel salvar sua foto.")
+				}
 			}else{
 				if (!!request.file.Location){
 					user.pic_profile = request.file.Location

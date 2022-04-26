@@ -3,7 +3,7 @@ import multerS3 from 'multer-s3'
 import path from "path";
 import crypto from "crypto-js";
 import { FileError } from "../../../utils/errors/custom/FileError";
-import { BucketS3 } from "../../../utils";
+import { BucketS3, File } from "../../../utils";
 
 export abstract class ConfigStorage {
 
@@ -19,14 +19,14 @@ export abstract class ConfigStorage {
 	public build(): multer.Options {
 		let settings : multer.Options  = {
 			limits: {fileSize: this.fileLimitSize},
-			fileFilter: (r, f, cb) => {
-				if(ConfigStorage.filterExt(this.extPermitted, f.mimetype)) cb(undefined, true)
-				else cb(new FileError(`Mimetype ${f.mimetype} not permitted.`))
+			fileFilter: (r, file, cb) => {
+				if(File.filterExt(this.extPermitted, file.mimetype)) cb(undefined, true)
+				else cb(new FileError(`Mimetype ${file.mimetype} not permitted.`))
 			},
 		};
 
 		let options : any = {
-			new_name : ConfigStorage.generateHashName(),
+			new_name : File.generateHashName(),
 			colletion : this.nameCollection
 		}
 
@@ -54,7 +54,7 @@ export abstract class ConfigStorage {
 				cb(undefined, this.pathResolve)
 			},
 			filename: (req, file, callback) => {
-				callback(undefined, `${options.new_name}.${ConfigStorage.getMimetype(file)}`)
+				callback(undefined, `${options.new_name}.${File.breakMimetype(file.mimetype).subType}`)
 			},
 		})
 	}
@@ -67,23 +67,11 @@ export abstract class ConfigStorage {
 			serverSideEncryption: 'AES256',
 			acl: "public-read",
 			key: function (req, file, callback) {
-				callback(undefined, `${options.colletion}/${options.new_name}.${ConfigStorage.getMimetype(file)}`)
+				callback(undefined, `${options.colletion}/${options.new_name}.${File.breakMimetype(file.mimetype).subType}`)
 			},
 			metadata: function (req, file, callback) {
 				callback(null, { originalname: file.originalname}) 
 			}
 		})
-	}
-
-	static generateHashName(){
-		return crypto.SHA256(new Date().toISOString()).toString()
-	}
-
-	static getMimetype(file : any){
-		return file.mimetype.substring(file.mimetype.lastIndexOf("/")+1)
-	}
-
-	static filterExt(permittedExt: String[], mimetype: string): boolean {
-		return permittedExt.includes(mimetype)
 	}
 }
