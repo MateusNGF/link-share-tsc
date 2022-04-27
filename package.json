@@ -53,7 +53,8 @@
       "start:dev": "nodemon -r dotenv/config src/server.ts dev",
       "start": "node build/server.js",
       "build": "rimraf ./build && tsc && npm run copyFiles",
-      "copyFiles": "npm run copyFilesHTML",
-      "copyFilesHTML": "copyfiles -u 1 src/**/*.html build/"
+      "copyFiles": "npm run copyFilesHTML && npm run copyFilesXLSX",
+      "copyFilesHTML": "copyfiles -u 1 src/**/*.html build/",
+      "copyFilesXLSX" : "copyfiles -u 1 src/**/*.xlsx build/"
    }
 }
