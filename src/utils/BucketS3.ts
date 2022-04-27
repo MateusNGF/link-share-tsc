@@ -18,12 +18,13 @@ class ClassBucketS3  {
         })
     ){}
 
-    async uploadFile(key : string, file : any){
+    async uploadFile(key : string, content : any, contentType : string){
         return this.S3.upload({
             Bucket: process.env.AWS_S3_BUCKET,
             Key : key,
-            Body: file.buffer,
-            ContentType: file.mimetype,
+            Body: content,
+            ContentType: contentType,
+            ContentEncoding: 'base64'
         }).promise();
     }
 

@@ -41,7 +41,7 @@ export class PicProfiles implements IController {
 			if (storageLocation === "cache"){
 				let key = File.generateHashName() + "." + File.breakMimetype(picture.mimetype).subType
 				let pictureKey = `${collectionProfiles}/${userID}/${key}`
-				let pictureUploaded = await BucketS3.uploadFile(pictureKey, picture)
+				let pictureUploaded = await BucketS3.uploadFile(pictureKey, picture.buffer, picture.mimetype)
 				if (!!pictureUploaded){
 					user.pic_profile = pictureUploaded.Location
 				}else{
