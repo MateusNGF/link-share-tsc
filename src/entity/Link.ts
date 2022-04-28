@@ -14,6 +14,9 @@ export class Link {
   @Column({ nullable: false })
   type: string
 
+  @Column({ nullable : true})
+  tag: string
+  
   @Column({ nullable: false })
   url: string
 
