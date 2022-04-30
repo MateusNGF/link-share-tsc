@@ -1,7 +1,7 @@
 import XLSX from "xlsx";
 import { BucketS3 } from "../BucketS3";
 
-export class Excel {
+export class Excel_depreciado {
 
     private workBook : XLSX.WorkBook = XLSX.utils.book_new()
     private workSheetData : Array<any>;
