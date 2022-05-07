@@ -1,7 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { User } from '../entity'
-import { BadRequest, schemas } from '../utils'
-// import ping from 'ping'
+import {BadRequest} from '../utils'
 
 @Entity('link')
 export class Link {
@@ -18,7 +17,7 @@ export class Link {
   tag: string
   
   @Column({ nullable: false })
-  url: string
+  context: string
 
   @ManyToOne(() => User, owner => owner.links)
   owner?: User
@@ -29,8 +28,10 @@ export class Link {
   @UpdateDateColumn({ name: 'update_At' })
   updateAt?: Date
 
-  async valid() {
-    await schemas.link.methods.validProps(["type", "url"], this)
-    // await ping.promise.probe(this.url, { timeout: 10, extra: ['-i', '2']})
+  async valid?() {
+    if (!this.tag) throw new BadRequest("tag is required.")
+    if (!this.context) throw new BadRequest("context is required.")
+    if (!this.type) throw new BadRequest("type is required.")
+    // await schemas.link.methods.validProps(["type", "url"], this)
   }
 }

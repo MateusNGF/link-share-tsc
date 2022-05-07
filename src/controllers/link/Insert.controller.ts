@@ -7,22 +7,36 @@ import { LinkRepository, UserRepository } from "../../repository";
 import { InvalidCredencial, Messenger, ParamExists, typeCustomRequest, typeCustomResponse } from "../../utils";
 
 export class CreateNewLink implements IController {
+   
+   private repositoryLink : LinkRepository;
+   private repositoryUser : UserRepository;
+   private userID : number;
+
    async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
       try {
-         const idCurrentUser = request.header["user"]["id"],
-            repositoryLink = getCustomRepository(LinkRepository),
-            repositoryUser = getCustomRepository(UserRepository),
-            newLink: Link = new Link(request.body);
-            
+         this.userID = request.header["user"]["id"]
+         this.repositoryLink = getCustomRepository(LinkRepository)
+         this.repositoryUser = getCustomRepository(UserRepository)
+      
+         const currentUser: User = await this.repositoryUser.findById(String(this.userID))
+         if (!currentUser) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound);
+      
+         let newLink: Link = new Link({
+            context : request.body.context,
+            tag : request.body.tag,
+            type: request.body.type
+         });
          await newLink.valid()
          
-         const currentUser: User = await repositoryUser.findById(idCurrentUser)
-         if (!currentUser) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound);
-         if (currentUser.links.find((link) => link.url.toString() === newLink.url.toString()))
-            throw new ParamExists(message.ptbr.entities.link.errors.duplicated);
+         if (currentUser.links.find(
+               (link) => 
+                  link.context.toString() === newLink.context.toString() 
+                  && link.type.toString() === newLink.type.toString()
+               
+         )) throw new ParamExists(message.ptbr.entities.link.errors.duplicated);
          
-         newLink.owner = idCurrentUser
-         await repositoryLink.save(newLink);
+         newLink.owner = currentUser
+         await this.repositoryLink.save(newLink);
          
          return Messenger.success({});
       } catch (error) {

@@ -18,7 +18,7 @@ export class LinksExportsToExcel implements IController {
       let path = `reports/${userID}/${File.generateHashName()}.xlsx`
       let ColumnNames = ["TYPE", "TAG", "URL", "CREATE"]
       let CollumnsData = links.map((link: Link) => {
-        return [link.type, link.tag, link.url, moment(link.createdAt).format("D/M/YY HH:mm")]
+        return [link.type, link.tag, link.context, moment(link.createdAt).format("D/M/YY HH:mm")]
       })
 
       const document = await new Excel("Links", ColumnNames, CollumnsData, 
