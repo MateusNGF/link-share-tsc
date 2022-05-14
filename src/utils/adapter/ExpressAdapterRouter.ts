@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IController } from "../../controllers";
 
 
-export type typeCustomRequest = { body: any, params: any, query: any, header: any, file : any, files : any }
+export type typeCustomRequest = { body?: any, params?: any, query?: any, header?: any, file ?: any, files ?: any }
 export type typeCustomResponse = { statusCode: number, body: any }
 
 export class ExpressAdapterRouter {

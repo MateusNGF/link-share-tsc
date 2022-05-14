@@ -1,5 +1,4 @@
 import XLSX from 'xlsx-populate';
-import * as fs from 'fs'
 import { File } from '../File';
 import { BucketS3 } from '../BucketS3';
 
@@ -55,7 +54,7 @@ export class Excel {
                     ) this._setStyle({ column: column, row: 1 }, customStyle.style)
                     else this._setStyle({ column: column, row: 1 })
                 })
-            }
+            }else this._setStyle({ column: column, row: 1 })
         }
 
         // POPULAR AS CELULAS
