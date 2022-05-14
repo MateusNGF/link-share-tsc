@@ -16,7 +16,7 @@ export class LinksExportsToExcel implements IController {
       let links = await repositoryLink.find({ where: { owner: userID } })
 
       let path = `reports/${userID}/${File.generateHashName()}.xlsx`
-      let ColumnNames = ["TYPE", "TAG", "URL", "CREATE"]
+      let ColumnNames = ["TYPE", "TAG", "CONTEXT", "CREATE"]
       let CollumnsData = links.map((link: Link) => {
         return [link.type, link.tag, link.context, moment(link.createdAt).format("D/M/YY HH:mm")]
       })
