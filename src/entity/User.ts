@@ -12,7 +12,7 @@ import { InvalidFormat, InvalidParam, schemas } from "../utils";
 import message from "../utils/configs/texts.config";
 @Entity("user")
 export class User extends BaseEntity {
-  constructor(new_user: Partial<User>) {
+  constructor(new_user?: Partial<User>) {
     super();
     Object.assign(this, new_user); // remover
   }
