@@ -2,11 +2,11 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { User } from "../../entity";
 import { UserRepository, ValidateRepository } from "../../repository";
-import { Messenger, schemas, typeCustomRequest, DataNotFound, typeCustomResponse } from "../../utils";
+import { Messenger, schemas, RequestCustom, DataNotFound, ResponseCustom } from "../../utils";
 import message from "../../utils/configs/texts.config";
 
 export class ValidateEmail implements IController {
-   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+   async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          await schemas.validate.methods.validProps(["email", "uuid"], request.body);
 

@@ -4,7 +4,7 @@ import { IController } from "..";
 import { Link, User } from "../../entity";
 import message from "../../utils/configs/texts.config";
 import { LinkRepository, UserRepository } from "../../repository";
-import { InvalidCredencial, Messenger, ParamExists, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { InvalidCredencial, Messenger, ParamExists, RequestCustom, ResponseCustom } from "../../utils";
 
 export class CreateNewLink implements IController {
    
@@ -12,7 +12,7 @@ export class CreateNewLink implements IController {
    private repositoryUser : UserRepository;
    private userID : number;
 
-   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+   async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          this.userID = request.header["user"]["id"]
          this.repositoryLink = getCustomRepository(LinkRepository)

@@ -5,14 +5,14 @@ import { LinkRepository } from "../../../repository";
 import {
   File,
   Messenger,
-  typeCustomRequest,
-  typeCustomResponse,
+  RequestCustom,
+  ResponseCustom,
 } from "../../../utils";
 import { Excel } from "../../../utils/Spreadsheets";
 import { IController } from "../../protocols";
 
 export class LinksExportsToExcel implements IController {
-  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+  async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const userID = request.header["user"]["id"];
       const repositoryLink = getCustomRepository(LinkRepository);

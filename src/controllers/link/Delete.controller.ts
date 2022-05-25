@@ -4,10 +4,10 @@ import { IController } from "..";
 import { Link, User } from "../../entity";
 import message from "../../utils/configs/texts.config";
 import { LinkRepository, UserRepository } from "../../repository";
-import { Messenger, typeCustomRequest, typeCustomResponse, Unauthorized } from "../../utils";
+import { Messenger, RequestCustom, ResponseCustom, Unauthorized } from "../../utils";
 
 export class DeleteLinkById implements IController {
-   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+   async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          const idCurrentUser = request.header["user"]["id"],
             idLinkForDelete = request.params["idLink"],

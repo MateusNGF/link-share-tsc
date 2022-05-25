@@ -1,13 +1,13 @@
 import { getCustomRepository } from "typeorm";
 import { UserRepository } from "../../repository";
 import message from "../../utils/configs/texts.config";
-import { buildBody, Messenger, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { buildBody, Messenger, RequestCustom, ResponseCustom } from "../../utils";
 import { NotFound } from "../../utils/errors/custom/NotFound";
 import { IController } from "../protocols";
 
 
 export class GetUser implements IController {
-  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+  async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const repository = getCustomRepository(UserRepository);      
       let foundedUser = await repository.findByNick(request.params.nickname) // busca por nickname

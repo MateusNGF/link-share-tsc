@@ -1,5 +1,5 @@
-import { typeCustomRequest, typeCustomResponse } from "../../utils/adapter";
+import { RequestCustom, ResponseCustom } from "../../utils/adapter";
 
 export interface IController {
-  exec(request: typeCustomRequest): Promise<typeCustomResponse>
+  exec(request: RequestCustom): Promise<ResponseCustom>
 }

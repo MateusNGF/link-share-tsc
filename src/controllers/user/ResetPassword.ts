@@ -2,8 +2,8 @@ import { getCustomRepository } from "typeorm";
 import { UserRepository, ValidateRepository } from "../../repository";
 import { v4 } from "uuid";
 import {
-  typeCustomRequest,
-  typeCustomResponse,
+  RequestCustom,
+  ResponseCustom,
   Messenger,
   BadRequest,
   Email,
@@ -22,7 +22,7 @@ export class ResetPassword implements IController {
   private email: Email = new Email();
   private readonly tokenPassword = process.env.TK_PW;
 
-  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+  async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const step = Number(request.params.step);
       this.userRepository = getCustomRepository(UserRepository);
@@ -41,7 +41,7 @@ export class ResetPassword implements IController {
     }
   }
 
-  private async stepOne(request: typeCustomRequest) {
+  private async stepOne(request: RequestCustom) {
     let user: User = await this.userRepository.findByEmail(request.body.email);
 
     if (!user) throw new BadRequest("Email não encontrado.");
@@ -74,7 +74,7 @@ export class ResetPassword implements IController {
     return { message: `Confira sua caixa de mensagens em ${user.email}.` };
   }
 
-  private async stepTwo(request: typeCustomRequest) {
+  private async stepTwo(request: RequestCustom) {
     let token: string = request.query.jwt;
     let validate: string = request.query.tk;
 

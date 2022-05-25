@@ -7,13 +7,13 @@ import {
   buildBody,
   InvalidParam,
   Messenger,
-  typeCustomRequest,
-  typeCustomResponse,
+  RequestCustom,
+  ResponseCustom,
 } from "../../utils";
 import { SendEmailValidateCode } from "../../utils/sendEmail/services";
 
 export class Create implements IController {
-  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+  async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const repository = getCustomRepository(UserRepository);
       const validateRepository = getCustomRepository(ValidateRepository);
