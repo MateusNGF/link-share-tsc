@@ -1,20 +1,14 @@
 import { Request, Response } from "express";
 import { IController } from "../../controllers";
 
-export type typeCustomRequest = {
-  body?: any;
-  params?: any;
-  query?: any;
-  header?: any;
-  file?: any;
-  files?: any;
-};
-export type typeCustomResponse = { statusCode: number; body: any };
+
+export type RequestCustom = {body?: any;params?: any;query?: any;header?: any;file?: any;files?: any;};
+export type ResponseCustom<T=any> = { statusCode: number; body:T};
 
 export class ExpressAdapterRouter {
   static adapt(controller: IController): any {
     return async (req: Request, res: Response) => {
-      const customRequest: typeCustomRequest = {
+      const customRequest: RequestCustom =  {
         body: req.body,
         params: req.params,
         query: req.query,
@@ -22,7 +16,7 @@ export class ExpressAdapterRouter {
         file: req.file,
         files: req.files,
       };
-      const httpResponse: typeCustomResponse = await controller.exec(
+      const httpResponse: ResponseCustom = await controller.exec(
         customRequest
       );
       res.status(httpResponse.statusCode).json(httpResponse.body);
