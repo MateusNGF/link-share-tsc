@@ -6,7 +6,7 @@ import message from "../../utils/configs/texts.config";
 import { RepositoryLinkTypeORM, RepositoryUserTypeORM } from "../../repository";
 import { InvalidCredencial, Messenger, ParamExists, RequestCustom, ResponseCustom } from "../../utils";
 
-export class CreateNewLink implements IController {
+export class CreateLinkInUserAccountController implements IController {
    
    private repositoryLink : RepositoryLinkTypeORM;
    private repositoryUser : RepositoryUserTypeORM;

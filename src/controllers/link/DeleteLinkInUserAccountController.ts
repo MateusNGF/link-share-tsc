@@ -6,7 +6,7 @@ import message from "../../utils/configs/texts.config";
 import { RepositoryLinkTypeORM, RepositoryUserTypeORM } from "../../repository";
 import { Messenger, RequestCustom, ResponseCustom, Unauthorized } from "../../utils";
 
-export class DeleteLinkById implements IController {
+export class DeleteLinkUserAccountController implements IController {
    async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          const idCurrentUser = request.header["user"]["id"],
