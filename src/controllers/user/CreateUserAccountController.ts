@@ -12,7 +12,7 @@ import {
 } from "../../utils";
 import { SendEmailValidateCode } from "../../utils/sendEmail/services";
 
-export class Create implements IController {
+export class CreateUserAccountController implements IController {
   async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const repository = getCustomRepository(RepositoryUserTypeORM);

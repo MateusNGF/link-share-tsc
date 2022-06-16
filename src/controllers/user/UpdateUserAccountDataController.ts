@@ -7,7 +7,7 @@ import message from "../../utils/configs/texts.config";
 import { SendEmailValidateCode } from "../../utils/sendEmail/services";
 import { v4 as uuid } from "uuid";
 
-export class Update implements IController {
+export class UpdateUserAccountDataController implements IController {
 	async exec(request: RequestCustom): Promise<ResponseCustom> {
 		try {
 			const repository = getCustomRepository(RepositoryUserTypeORM);

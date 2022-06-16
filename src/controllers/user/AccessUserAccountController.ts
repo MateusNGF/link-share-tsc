@@ -6,7 +6,7 @@ import { buildBody, Messenger, schemas, RequestCustom, ResponseCustom } from "..
 
 
 
-export class AccessUserAcountController implements IController {
+export class AccessUserAccountController implements IController {
   async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const repository = getCustomRepository(RepositoryUserTypeORM);

@@ -9,7 +9,7 @@ import moment from "moment";
 const storageLocation = process.env.StorageType as string;
 const collectionProfiles = process.env.collectionPicProfiles as string;
 
-export class PicProfiles implements IController {
+export class ChangeProfilePictureUserController implements IController {
 	async exec(request: RequestCustom): Promise<ResponseCustom> {
 		try {
 

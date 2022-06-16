@@ -4,6 +4,10 @@ import { User } from "../../entity";
 import { RepositoryUserTypeORM} from "../../repository";
 import { buildBody, Messenger, RequestCustom, ResponseCustom } from "../../utils";
 
+/**
+ * DEPRECIANDO ESTA ROTA.
+ *  
+ */
 export class Refresh implements IController {
   async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {

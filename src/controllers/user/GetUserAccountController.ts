@@ -6,7 +6,7 @@ import { NotFound } from "../../utils/errors/custom/NotFound";
 import { IController } from "../protocols";
 
 
-export class GetUser implements IController {
+export class GetUserAccountController implements IController {
   async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const repository = getCustomRepository(RepositoryUserTypeORM);      

@@ -5,7 +5,7 @@ import { RepositoryUserTypeORM, RepositoryValidadeTypeORM } from "../../reposito
 import { Messenger, schemas, RequestCustom, DataNotFound, ResponseCustom } from "../../utils";
 import message from "../../utils/configs/texts.config";
 
-export class ValidateEmail implements IController {
+export class ValidateUserAccountEmailController implements IController {
    async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          await schemas.validate.methods.validProps(["email", "uuid"], request.body);

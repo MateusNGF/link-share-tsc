@@ -16,7 +16,7 @@ import { User, Validate } from "../../entity";
 import Mail from "nodemailer/lib/mailer";
 import { Templates } from "../../utils/template/Enginer";
 
-export class ResetPassword implements IController {
+export class ResetUserAccountPasswordController implements IController {
   private userRepository: RepositoryUserTypeORM;
   private validateRepository: RepositoryValidadeTypeORM;
   private email: Email = new Email();
