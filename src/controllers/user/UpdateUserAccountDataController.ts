@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { User, Validate } from "../../entity";
 import { RepositoryUserTypeORM, RepositoryValidadeTypeORM } from "../../repository";
 import { BadRequest, buildBody, DataNotFound, InvalidParam, Messenger, RequestCustom, ResponseCustom } from "../../utils";
-import { IController } from "../protocols";
+import { IController } from "../contracts";
 import message from "../../utils/configs/texts.config";
 import { SendEmailValidateCode } from "../../utils/sendEmail/services";
 import { v4 as uuid } from "uuid";

@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import { IController } from "..";
+import { IController } from "../contracts";
 import { User } from "../../entity";
 import { RepositoryUserTypeORM } from "../../repository";
 import { buildBody, Messenger, schemas, RequestCustom, ResponseCustom } from "../../utils";

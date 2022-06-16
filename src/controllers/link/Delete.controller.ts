@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm";
 
-import { IController } from "..";
+import { IController } from "../contracts";
 import { Link, User } from "../../entity";
 import message from "../../utils/configs/texts.config";
 import { RepositoryLinkTypeORM, RepositoryUserTypeORM } from "../../repository";

@@ -9,7 +9,7 @@ import {
   ResponseCustom,
 } from "../../../utils";
 import { Excel } from "../../../utils/Spreadsheets";
-import { IController } from "../../protocols";
+import { IController } from "../../contracts";
 
 export class LinksExportsToExcel implements IController {
   async exec(request: RequestCustom): Promise<ResponseCustom> {

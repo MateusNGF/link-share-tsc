@@ -11,7 +11,7 @@ import {
   decoded,
   Unauthorized,
 } from "../../utils";
-import { IController } from "../protocols";
+import { IController } from "../contracts";
 import { User, Validate } from "../../entity";
 import Mail from "nodemailer/lib/mailer";
 import { Templates } from "../../utils/template/Enginer";

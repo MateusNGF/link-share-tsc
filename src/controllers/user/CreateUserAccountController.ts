@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import { IController } from "..";
+import { IController } from "../contracts";
 import { Link, User, Validate } from "../../entity";
 import { v4 as uuid } from "uuid";
 import { RepositoryUserTypeORM, RepositoryValidadeTypeORM } from "../../repository";

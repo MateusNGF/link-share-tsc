@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { User } from "../../entity";
 import { RepositoryUserTypeORM } from "../../repository";
 import { DataNotFound, BadRequest, Messenger, RequestCustom, ResponseCustom, BucketS3, File } from "../../utils";
-import { IController } from "../protocols";
+import { IController } from "../contracts";
 import message from "../../utils/configs/texts.config";
 import moment from "moment";
 

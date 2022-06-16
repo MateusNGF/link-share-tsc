@@ -3,7 +3,7 @@ import { RepositoryUserTypeORM } from "../../repository";
 import message from "../../utils/configs/texts.config";
 import { buildBody, Messenger, RequestCustom, ResponseCustom } from "../../utils";
 import { NotFound } from "../../utils/errors/custom/NotFound";
-import { IController } from "../protocols";
+import { IController } from "../contracts";
 
 
 export class GetUserAccountController implements IController {
