@@ -1,7 +1,7 @@
 import moment from "moment";
 import { getCustomRepository } from "typeorm";
 import { Link } from "../../../entity";
-import { LinkRepository } from "../../../repository";
+import { RepositoryLinkTypeORM } from "../../../repository";
 import {
   File,
   Messenger,
@@ -15,7 +15,7 @@ export class LinksExportsToExcel implements IController {
   async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const userID = request.header["user"]["id"];
-      const repositoryLink = getCustomRepository(LinkRepository);
+      const repositoryLink = getCustomRepository(RepositoryLinkTypeORM);
 
       let links = await repositoryLink.find({ where: { owner: userID } });
 

@@ -3,9 +3,10 @@ import { EntityRepository, Repository } from "typeorm";
 import { User } from "../entity";
 import message from "../utils/configs/texts.config";
 import { InvalidCredencial, DataNotFound, ParamExists, Unauthorized } from "../utils";
+import IRepositoryUser from "./contracts/IRepositoryUser";
 
 @EntityRepository(User)
-export class UserRepository extends Repository<User> {
+export class RepositoryUserTypeORM extends Repository<User> implements IRepositoryUser  {
 	public async findByEmail(email: string): Promise<User> {
 		return await this.findOne({ where: { email } });
 	}

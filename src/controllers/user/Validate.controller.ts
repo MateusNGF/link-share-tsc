@@ -1,7 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { User } from "../../entity";
-import { UserRepository, ValidateRepository } from "../../repository";
+import { RepositoryUserTypeORM, RepositoryValidadeTypeORM } from "../../repository";
 import { Messenger, schemas, RequestCustom, DataNotFound, ResponseCustom } from "../../utils";
 import message from "../../utils/configs/texts.config";
 
@@ -10,8 +10,8 @@ export class ValidateEmail implements IController {
       try {
          await schemas.validate.methods.validProps(["email", "uuid"], request.body);
 
-         const repository = getCustomRepository(UserRepository);
-         const validateRepository = getCustomRepository(ValidateRepository);
+         const repository = getCustomRepository(RepositoryUserTypeORM);
+         const validateRepository = getCustomRepository(RepositoryValidadeTypeORM);
 
          var validateUser: User = new User();
          validateUser = await repository.findByEmail(request.body.email);

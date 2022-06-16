@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import { UserRepository, ValidateRepository } from "../../repository";
+import { RepositoryUserTypeORM, RepositoryValidadeTypeORM } from "../../repository";
 import { v4 } from "uuid";
 import {
   RequestCustom,
@@ -17,16 +17,16 @@ import Mail from "nodemailer/lib/mailer";
 import { Templates } from "../../utils/template/Enginer";
 
 export class ResetPassword implements IController {
-  private userRepository: UserRepository;
-  private validateRepository: ValidateRepository;
+  private userRepository: RepositoryUserTypeORM;
+  private validateRepository: RepositoryValidadeTypeORM;
   private email: Email = new Email();
   private readonly tokenPassword = process.env.TK_PW;
 
   async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const step = Number(request.params.step);
-      this.userRepository = getCustomRepository(UserRepository);
-      this.validateRepository = getCustomRepository(ValidateRepository);
+      this.userRepository = getCustomRepository(RepositoryUserTypeORM);
+      this.validateRepository = getCustomRepository(RepositoryValidadeTypeORM);
 
       switch (step) {
         case 1:

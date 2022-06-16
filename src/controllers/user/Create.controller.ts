@@ -2,7 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { Link, User, Validate } from "../../entity";
 import { v4 as uuid } from "uuid";
-import { UserRepository, ValidateRepository } from "../../repository";
+import { RepositoryUserTypeORM, RepositoryValidadeTypeORM } from "../../repository";
 import {
   buildBody,
   InvalidParam,
@@ -15,8 +15,8 @@ import { SendEmailValidateCode } from "../../utils/sendEmail/services";
 export class Create implements IController {
   async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
-      const repository = getCustomRepository(UserRepository);
-      const validateRepository = getCustomRepository(ValidateRepository);
+      const repository = getCustomRepository(RepositoryUserTypeORM);
+      const validateRepository = getCustomRepository(RepositoryValidadeTypeORM);
 
       const userCurrent = new User({
         name: request.body.name,
