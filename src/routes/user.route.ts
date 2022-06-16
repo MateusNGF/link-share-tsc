@@ -1,23 +1,23 @@
 import multer from "multer";
 import { Router } from "express";
 
-import { ExpressAdapterRouter, verify } from "../utils";
 import { CreateUserAccountController, AccessUserAccountController, Refresh, UpdateUserAccountDataController, ValidateUserAccountEmailController, ChangeProfilePictureUserController, ResetUserAccountPasswordController, GetUserAccountController } from "../controllers/user";
 import { StoragePicProfile } from "../database/configs/multer";
+import { expressAdapterRouter, verify } from "../utils";
 
 export const userRouter = Router();
 
-userRouter.post("/register", ExpressAdapterRouter.adapt(new CreateUserAccountController()));
-userRouter.post("/access", ExpressAdapterRouter.adapt(new AccessUserAccountController()));
-userRouter.post("/validate", ExpressAdapterRouter.adapt(new ValidateUserAccountEmailController()));
-userRouter.get("/refresh", verify, ExpressAdapterRouter.adapt(new Refresh()));
-userRouter.put("/update", verify, ExpressAdapterRouter.adapt(new UpdateUserAccountDataController()));
-userRouter.get("/visitor/:nickname", ExpressAdapterRouter.adapt(new GetUserAccountController()))
+userRouter.post("/register", expressAdapterRouter(new CreateUserAccountController()));
+userRouter.post("/access", expressAdapterRouter(new AccessUserAccountController()));
+userRouter.post("/validate", expressAdapterRouter(new ValidateUserAccountEmailController()));
+userRouter.get("/refresh", verify, expressAdapterRouter(new Refresh()));
+userRouter.put("/update", verify, expressAdapterRouter(new UpdateUserAccountDataController()));
+userRouter.get("/visitor/:nickname", expressAdapterRouter(new GetUserAccountController()))
 userRouter.post("/pic", verify,
    multer(
       new StoragePicProfile().config()
    ).single("pic_profile"),
-   ExpressAdapterRouter.adapt(new ChangeProfilePictureUserController())
+   expressAdapterRouter(new ChangeProfilePictureUserController())
 );
 
-userRouter.put("/reset_password/:step", ExpressAdapterRouter.adapt(new ResetUserAccountPasswordController()))
+userRouter.put("/reset_password/:step", expressAdapterRouter(new ResetUserAccountPasswordController()))

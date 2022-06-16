@@ -1,5 +1,5 @@
 import { InvalidParam } from ".";
-import { ResponseCustom } from "./adapter";
+import { ResponseCustom } from "./adapters";
 
 export class Messenger {
   static success(body: object): ResponseCustom {
