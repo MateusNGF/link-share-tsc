@@ -9,6 +9,6 @@ export const SETUP_CONFIGURATION = {
 
 export default abstract class MailService  {
   constructor(
-    protected readonly setupConfiguration : IMailService.Configuration = SETUP_CONFIGURATION
+    readonly setupConfiguration : IMailService.Configuration = SETUP_CONFIGURATION
   ){}
 } 

@@ -1,6 +1,8 @@
 
 
 export interface IMailService {
+  setupConfiguration : IMailService.Configuration
+  
   isEmail(email: string): Promise<any>
   send(options : any): Promise<boolean>
 }
