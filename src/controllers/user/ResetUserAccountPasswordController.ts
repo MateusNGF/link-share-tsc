@@ -6,20 +6,20 @@ import {
   ResponseCustom,
   Messenger,
   BadRequest,
-  Email,
   create,
   decoded,
   Unauthorized,
 } from "../../utils";
 import { IController } from "../contracts";
 import { User, Validate } from "../../entity";
-import Mail from "nodemailer/lib/mailer";
 import { Templates } from "../../utils/template/Enginer";
+import MailServiceByNodemailer from "../../utils/Mail/MailServiceByNodemailer";
+import { IMailService } from "../../utils/Mail/contracts/IMailService";
 
 export class ResetUserAccountPasswordController implements IController {
   private userRepository: RepositoryUserTypeORM;
   private validateRepository: RepositoryValidadeTypeORM;
-  private email: Email = new Email();
+  private email: MailServiceByNodemailer = new MailServiceByNodemailer();
   private readonly tokenPassword = process.env.TK_PW;
 
   async exec(request: RequestCustom): Promise<ResponseCustom> {
@@ -63,7 +63,7 @@ export class ResetUserAccountPasswordController implements IController {
       process.env.FRONTEND_HOST as string
     }/reset-password?tk=${validateUUID}&jwt=${validateToken}`;
 
-    let ConfigurationSMTP: Mail.Options = {
+    let ConfigurationSMTP: IMailService.SendOptions = {
       to: user.email,
       subject: "Recuperação de conta.",
       html: Templates.build("reset-password", { redirect }),
