@@ -1,17 +1,16 @@
 import { getCustomRepository } from "typeorm";
 import { User } from "../../entity";
-import { UserRepository } from "../../repository";
-import { DataNotFound, BadRequest, Messenger, typeCustomRequest, typeCustomResponse, BucketS3, File } from "../../utils";
-import { IController } from "../protocols";
+import { RepositoryUserTypeORM } from "../../repository";
+import { DataNotFound, BadRequest, Messenger, RequestCustom, ResponseCustom, BucketS3, File } from "../../utils";
+import { IController } from "../contracts";
 import message from "../../utils/configs/texts.config";
-import { StoragePicProfile } from "../../database/configs";
 import moment from "moment";
 
 const storageLocation = process.env.StorageType as string;
 const collectionProfiles = process.env.collectionPicProfiles as string;
 
-export class PicProfiles implements IController {
-	async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+export class ChangeProfilePictureUserController implements IController {
+	async exec(request: RequestCustom): Promise<ResponseCustom> {
 		try {
 
 			const userID = request.header["user"]["id"]
@@ -23,7 +22,7 @@ export class PicProfiles implements IController {
 			if (!!request && !request.file) throw new BadRequest("Arquivo recebido.")
 			const picture : Express.Multer.File = request.file
 
-			const repository = getCustomRepository(UserRepository);
+			const repository = getCustomRepository(RepositoryUserTypeORM);
 			let user: User = await repository.findById(userID);
 
 			if (!user) throw new DataNotFound("Usuario não encontrado.");

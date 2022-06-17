@@ -1,12 +1,12 @@
 import { InvalidParam } from ".";
-import { typeCustomResponse } from "./adapter";
+import { ResponseCustom } from "./adapters";
 
 export class Messenger {
-  static success(body: object): typeCustomResponse {
+  static success(body: object): ResponseCustom {
     return { statusCode: 200, body: { status: true, body } }
   }
 
-  static error(error: any): typeCustomResponse {
+  static error(error: any): ResponseCustom {
     if (error.name === "ValidationError") error = new InvalidParam(error.message)
     if (!error.custom) { this.sendInConsole(error); return { statusCode: 500, body: { status: false, message: "Internal Error. Try later... :(" } } }
     return { 

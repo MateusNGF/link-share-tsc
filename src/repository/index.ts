@@ -1,3 +1,3 @@
-export * from "./User.repository";
-export * from "./Link.repository";
-export * from "./Validate.repository";
+export * from "./RepositoryUserTypeORM";
+export * from "./RepositoryLinkTypeORM";
+export * from "./RepositoryValidateTypeORM";

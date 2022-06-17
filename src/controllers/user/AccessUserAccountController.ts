@@ -1,16 +1,15 @@
 import { getCustomRepository } from "typeorm";
-import { IController } from "..";
+import { IController } from "../contracts";
 import { User } from "../../entity";
-import { UserRepository } from "../../repository";
-import { buildBody, Messenger, schemas, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { RepositoryUserTypeORM } from "../../repository";
+import { buildBody, Messenger, schemas, RequestCustom, ResponseCustom } from "../../utils";
 
 
 
-export class Access implements IController {
-
-  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+export class AccessUserAccountController implements IController {
+  async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
-      const repository = getCustomRepository(UserRepository);
+      const repository = getCustomRepository(RepositoryUserTypeORM);
       var access: User = new User()
 
       await schemas.user.methods.validProp("email", request.body.email)

@@ -1,60 +1,74 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { Link } from "../entity";
 import { InvalidFormat, InvalidParam, schemas } from "../utils";
 import message from "../utils/configs/texts.config";
 @Entity("user")
 export class User extends BaseEntity {
-    constructor(new_user: User = null) {
-        super();Object.assign(this, new_user);
-    }
+  constructor(new_user?: Partial<User>) {
+    super();
+    Object.assign(this, new_user); // remover
+  }
 
-    @PrimaryGeneratedColumn()
-    id?: string;
+  @PrimaryGeneratedColumn()
+  id?: string;
 
-    @Column({ nullable: false })
-    name: string;
+  @Column({ nullable: false })
+  name: string;
 
-    @Column({ unique: true, nullable: false })
-    email: string;
+  @Column({ unique: true, nullable: false })
+  email: string;
 
-    @Column({ unique: true, nullable: false })
-    nickname: string;
+  @Column({ unique: true, nullable: false })
+  nickname: string;
 
-    @Column({ nullable: false })
-    password: string;
+  @Column({ nullable: false })
+  password: string;
 
-    @Column({ nullable: false, default: false })
-    verified: boolean;
+  @Column({ nullable: false, default: false })
+  verified: boolean;
 
-    @Column({ nullable: true, default: null })
-    pic_profile?: string;
+  @Column({ nullable: true, default: null })
+  pic_profile?: string;
 
-    @Column({ nullable: true, default: null})
-    description?: string;
-    
-    @Column({name: "last_update_pic_profile", nullable : true, default : null})
-    lastUpdatePicProfile?: string;
-    
-    @OneToMany(() => Link, (links) => links.owner, { eager: true, cascade: true })
-    links?: Link[];
+  @Column({ nullable: true, default: null })
+  description?: string;
 
-    @CreateDateColumn({ name: "created_At" })
-    createdAt?: Date;
+  @Column({ name: "last_update_pic_profile", nullable: true, default: null })
+  lastUpdatePicProfile?: string;
 
-    @UpdateDateColumn({ name: "update_At" })
-    updateAt?: Date;
+  @OneToMany(() => Link, (links) => links.owner, { eager: true, cascade: true })
+  links?: Link[];
 
+  @CreateDateColumn({ name: "created_At" })
+  createdAt?: Date;
 
-    isOwner(link: Link): boolean {
-        if (this.id.toString() === link.owner.toString()) return true;
-        return false;
-    }
+  @UpdateDateColumn({ name: "update_At" })
+  updateAt?: Date;
 
-    async valid(thisProps: string[] = null) {
-        return schemas.user.methods.validProps(thisProps || ["name", "nickname", "password", "email"], this);
-    }
+  isOwner(link: Link): boolean {
+    if (this.id.toString() === link.owner.toString()) return true;
+    return false;
+  }
 
-    nicknameFormatIsValid(nickname:string) {
-        if(new RegExp(/^[^\\s-]$/).test(nickname))  throw new InvalidFormat(message.ptbr.entities.user.validation.nickname.invalidFormat)
-    }
+  async valid(thisProps: string[] = null) {
+    return schemas.user.methods.validProps(
+      thisProps || ["name", "nickname", "password", "email"],
+      this
+    );
+  }
+
+  nicknameFormatIsValid(nickname: string) {
+    if (new RegExp(/^[^\\s-]$/).test(nickname))
+      throw new InvalidFormat(
+        message.ptbr.entities.user.validation.nickname.invalidFormat
+      );
+  }
 }

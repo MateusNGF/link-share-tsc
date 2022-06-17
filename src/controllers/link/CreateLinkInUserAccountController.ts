@@ -1,22 +1,22 @@
 import { getCustomRepository } from "typeorm";
 
-import { IController } from "..";
+import { IController } from "../contracts";
 import { Link, User } from "../../entity";
 import message from "../../utils/configs/texts.config";
-import { LinkRepository, UserRepository } from "../../repository";
-import { InvalidCredencial, Messenger, ParamExists, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { RepositoryLinkTypeORM, RepositoryUserTypeORM } from "../../repository";
+import { InvalidCredencial, Messenger, ParamExists, RequestCustom, ResponseCustom } from "../../utils";
 
-export class CreateNewLink implements IController {
+export class CreateLinkInUserAccountController implements IController {
    
-   private repositoryLink : LinkRepository;
-   private repositoryUser : UserRepository;
+   private repositoryLink : RepositoryLinkTypeORM;
+   private repositoryUser : RepositoryUserTypeORM;
    private userID : number;
 
-   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+   async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          this.userID = request.header["user"]["id"]
-         this.repositoryLink = getCustomRepository(LinkRepository)
-         this.repositoryUser = getCustomRepository(UserRepository)
+         this.repositoryLink = getCustomRepository(RepositoryLinkTypeORM)
+         this.repositoryUser = getCustomRepository(RepositoryUserTypeORM)
       
          const currentUser: User = await this.repositoryUser.findById(String(this.userID))
          if (!currentUser) throw new InvalidCredencial(message.ptbr.entities.user.errors.notFound);

@@ -1,18 +1,18 @@
 import { getCustomRepository } from "typeorm";
 
-import { IController } from "..";
+import { IController } from "../contracts";
 import { Link, User } from "../../entity";
 import message from "../../utils/configs/texts.config";
-import { LinkRepository, UserRepository } from "../../repository";
-import { Messenger, typeCustomRequest, typeCustomResponse, Unauthorized } from "../../utils";
+import { RepositoryLinkTypeORM, RepositoryUserTypeORM } from "../../repository";
+import { Messenger, RequestCustom, ResponseCustom, Unauthorized } from "../../utils";
 
-export class DeleteLinkById implements IController {
-   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+export class DeleteLinkUserAccountController implements IController {
+   async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          const idCurrentUser = request.header["user"]["id"],
             idLinkForDelete = request.params["idLink"],
-            repositoryUser = getCustomRepository(UserRepository),
-            repositoryLink = getCustomRepository(LinkRepository);
+            repositoryUser = getCustomRepository(RepositoryUserTypeORM),
+            repositoryLink = getCustomRepository(RepositoryLinkTypeORM);
 
          const currentUser: User = await repositoryUser.findById(idCurrentUser);
          const currentLinkUser = currentUser.links.find((link: Link) => link.id_link.toString() === idLinkForDelete.toString());

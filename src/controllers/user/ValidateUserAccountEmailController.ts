@@ -1,17 +1,17 @@
 import { getCustomRepository } from "typeorm";
-import { IController } from "..";
+import { IController } from "../contracts";
 import { User } from "../../entity";
-import { UserRepository, ValidateRepository } from "../../repository";
-import { Messenger, schemas, typeCustomRequest, DataNotFound, typeCustomResponse } from "../../utils";
+import { RepositoryUserTypeORM, RepositoryValidadeTypeORM } from "../../repository";
+import { Messenger, schemas, RequestCustom, DataNotFound, ResponseCustom } from "../../utils";
 import message from "../../utils/configs/texts.config";
 
-export class ValidateEmail implements IController {
-   async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+export class ValidateUserAccountEmailController implements IController {
+   async exec(request: RequestCustom): Promise<ResponseCustom> {
       try {
          await schemas.validate.methods.validProps(["email", "uuid"], request.body);
 
-         const repository = getCustomRepository(UserRepository);
-         const validateRepository = getCustomRepository(ValidateRepository);
+         const repository = getCustomRepository(RepositoryUserTypeORM);
+         const validateRepository = getCustomRepository(RepositoryValidadeTypeORM);
 
          var validateUser: User = new User();
          validateUser = await repository.findByEmail(request.body.email);

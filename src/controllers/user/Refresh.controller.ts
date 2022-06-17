@@ -1,14 +1,18 @@
 import { getCustomRepository } from "typeorm";
 import { IController } from "..";
 import { User } from "../../entity";
-import { UserRepository,ValidateRepository } from "../../repository";
-import { buildBody, Messenger, typeCustomRequest, typeCustomResponse } from "../../utils";
+import { RepositoryUserTypeORM} from "../../repository";
+import { buildBody, Messenger, RequestCustom, ResponseCustom } from "../../utils";
 
+/**
+ * DEPRECIANDO ESTA ROTA.
+ *  
+ */
 export class Refresh implements IController {
-  async exec(request: typeCustomRequest): Promise<typeCustomResponse> {
+  async exec(request: RequestCustom): Promise<ResponseCustom> {
     try {
       const idCurrentUser = request.header['user']['id']
-      const repository = getCustomRepository(UserRepository);
+      const repository = getCustomRepository(RepositoryUserTypeORM);
 
       const currentUserUpdated: User = await repository.findById(idCurrentUser)
 

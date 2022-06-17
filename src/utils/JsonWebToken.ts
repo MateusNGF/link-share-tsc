@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { boolean } from "joi";
 import jwt from "jsonwebtoken";
 import { User } from "../entity";
 import { MissingParameters } from "./errors";
