@@ -1,5 +1,11 @@
 import AWS from "aws-sdk";
-class ClassBucketS3  {
+
+export interface IFilesCloudManager {
+    uploadFile(...params: Array<String>): Promise<any>
+    deleteFile(...params: Array<any>): Promise<any>
+}
+
+class ClassBucketS3 implements IFilesCloudManager  {
     
     constructor(
         public bucket: string = process.env.AWS_S3_BUCKET,
